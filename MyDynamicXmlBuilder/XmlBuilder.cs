@@ -10,8 +10,8 @@
 
     public class XmlBuilder : DynamicObject
     {
-        XDocument root = new XDocument();
-        XContainer current;
+        private XDocument root = new XDocument();
+        private XContainer current;
 
         public static Action Fragment(Action fragmentBuilder)
         {
@@ -158,7 +158,7 @@
             root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
         }
 
-        #region converters
+       // #region converters
 
         public static implicit operator string (XmlBuilder xml)
         {
@@ -227,7 +227,7 @@
             return ToXmlNode() as XmlElement;
         }
 
-        #endregion
+       // #endregion
     }
 
 }

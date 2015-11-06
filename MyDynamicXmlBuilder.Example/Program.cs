@@ -3,13 +3,16 @@ using MyDynamicXmlBuilder;
 
 namespace MyDynamicXmlBuilder.Example
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        internal static void Main(string[] args)
         {
             dynamic xml = new XmlBuilder();
 
-            xml.hello("word");
+            xml.user("Kiro Zlatniq", new {
+                username = "kiro",
+                age = 50
+            });
 
             Console.WriteLine(xml.ToString(true));
         }
