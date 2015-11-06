@@ -41,7 +41,9 @@
             }
 
             var xbuilder = new XmlBuilder();
+
             builder(xbuilder);
+
             return xbuilder;
         }
 
@@ -53,8 +55,11 @@
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             result = null;
+
             string tagName = binder.Name;
+
             Tag(tagName, args);
+
             return true;
         }
 
@@ -66,30 +71,40 @@
             }
 
             if (tagName.IndexOf('_') == 0)
+            {
                 tagName = tagName.Substring(1);
+            }
 
             string content = null;
             object attributes = null;
             Action fragment = null;
 
-            args.ToList().ForEach(arg =>
-            {
+            args.ToList().ForEach(arg => {
                 if (arg is Action)
+                {
                     fragment = arg as Action;
+
+                }
                 else if (arg is Action<dynamic>)
+                {
                     fragment = () => (arg as Action<dynamic>)(this);
-
+                }
                 else if (arg is string)
+                {
                     content = arg as string;
-
+                }
                 else if (arg.GetType().IsValueType)
+                {
                     content = arg.ToString();
-
+                }
                 else
+                {
                     attributes = arg;
+                }
             });
 
             var element = new XElement(tagName);
+
             current.Add(element);
 
             if (fragment != null)
@@ -127,21 +142,30 @@
 
         public void Comment(string comment)
         {
-            if (String.IsNullOrEmpty(comment)) { throw new ArgumentNullException("comment"); }
+            if (String.IsNullOrEmpty(comment))
+            {
+                throw new ArgumentNullException("comment");
+            }
 
             current.Add(new XComment(comment));
         }
 
         public void CData(string data)
         {
-            if (String.IsNullOrEmpty(data)) { throw new ArgumentNullException("data"); }
+            if (String.IsNullOrEmpty(data))
+            {
+                throw new ArgumentNullException("data");
+            }
 
             current.Add(new XCData(data));
         }
 
         public void Text(string text)
         {
-            if (String.IsNullOrEmpty(text)) { throw new ArgumentNullException("text"); }
+            if (String.IsNullOrEmpty(text))
+            {
+                throw new ArgumentNullException("text");
+            }
 
             current.Add(new XText(text));
         }
@@ -153,7 +177,10 @@
 
         public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
         {
-            if (String.IsNullOrEmpty(name)) { throw new ArgumentNullException("name"); }
+            if (String.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException("name");
+            }
 
             root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
         }
@@ -172,43 +199,50 @@
             if (root.Declaration != null &&
                 !String.IsNullOrEmpty(root.Declaration.Encoding) &&
                 root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
+            {
                 encoding = new UnicodeEncoding(false, false);
+            }
 
             MemoryStream memoryStream = new MemoryStream();
 
-            XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
-            {
+            XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings {
                 Encoding = encoding,
                 Indent = indent,
                 CloseOutput = true,
-
                 OmitXmlDeclaration = root.Declaration == null
             });
+
             root.Save(xmlWriter);
             xmlWriter.Flush();
             xmlWriter.Close();
 
             if (encoding is UnicodeEncoding)
+            {
                 return Encoding.Unicode.GetString(memoryStream.ToArray());
+            }
             else
+            {
                 return Encoding.UTF8.GetString(memoryStream.ToArray());
+            }               
         }
 
-
+/*
         public XDocument ToXDocument()
         {
             return root;
         }
-
-        public XElement ToXElement()
+        */
+        /*public XElement ToXElement()
         {
             return root.Elements().FirstOrDefault();
         }
-
-        public XmlDocument ToXmlDocument()
+        */
+        /*public XmlDocument ToXmlDocument()
         {
             var xmlDoc = new XmlDocument();
+
             xmlDoc.Load(root.CreateReader());
+
             return xmlDoc;
         }
 
@@ -225,7 +259,7 @@
         public XmlElement ToXmlElement()
         {
             return ToXmlNode() as XmlElement;
-        }
+        }*/
 
        // #endregion
     }
