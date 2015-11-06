@@ -8,7 +8,7 @@
     using System.Xml;
     using System.Text;
 
-    public class XmlBuilder : DynamicObject
+    public sealed class XmlBuilder : DynamicObject
     {
         private XDocument root = new XDocument();
         private XContainer current;
