@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Dynamic;
 using MyDynamicXmlBuilder;
 
 namespace MyDynamicXmlBuilder.Example
@@ -8,6 +9,8 @@ namespace MyDynamicXmlBuilder.Example
         internal static void Main(string[] args)
         {
             dynamic xml = new XmlBuilder();
+
+            xml.Declaration();
 
             xml.user("Kiro Zlatniq", new {
                 username = "kiro",
