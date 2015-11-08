@@ -13,6 +13,7 @@ namespace MyDynamicXmlBuilder.Example
             xml.Declaration();
 
             xml.user("Kiro Zlatniq", new {
+                id = 1,
                 username = "kiro",
                 age = 50
             });

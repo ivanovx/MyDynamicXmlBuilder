@@ -185,8 +185,6 @@
             root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
         }
 
-       // #region converters
-
         public static implicit operator string (XmlBuilder xml)
         {
             return xml.ToString(false);
@@ -196,8 +194,7 @@
         {
             Encoding encoding = new UTF8Encoding(false);
 
-            if (root.Declaration != null &&
-                !String.IsNullOrEmpty(root.Declaration.Encoding) &&
+            if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
                 root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
             {
                 encoding = new UnicodeEncoding(false, false);
@@ -226,7 +223,7 @@
             }               
         }
 
-/*
+    /*
         public XDocument ToXDocument()
         {
             return root;
@@ -260,8 +257,6 @@
         {
             return ToXmlNode() as XmlElement;
         }*/
-
-       // #endregion
     }
 
 }
