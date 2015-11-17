@@ -1,6 +1,6 @@
 # MyDynamicXmlBuilder
 
-This project inspired by Ivaylo Kenov
+This project is inspired by DynamicXmlBuilder from Ivaylo Kenov
 
 ## Documentation
 ```
