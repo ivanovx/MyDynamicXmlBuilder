@@ -13,6 +13,11 @@
         private XDocument root = new XDocument();
         private XContainer current;
 
+        public XmlBuilder()
+        {
+            current = root;
+        }
+
         public static Action Fragment(Action fragmentBuilder)
         {
             if (fragmentBuilder == null)
@@ -40,16 +45,11 @@
                 throw new ArgumentNullException("builder");
             }
 
-            var xbuilder = new XmlBuilder();
+            XmlBuilder xmlBuilder = new XmlBuilder();
 
-            builder(xbuilder);
+            builder(xmlBuilder);
 
-            return xbuilder;
-        }
-
-        public XmlBuilder()
-        {
-            current = root;
+            return xmlBuilder;
         }
 
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
@@ -77,6 +77,7 @@
 
             string content = null;
             object attributes = null;
+
             Action fragment = null;
 
             args.ToList().ForEach(arg => {
@@ -103,7 +104,7 @@
                 }
             });
 
-            var element = new XElement(tagName);
+            XElement element = new XElement(tagName);
 
             current.Add(element);
 
@@ -124,6 +125,7 @@
                     if (prop.Name == "xmlns")
                     {
                         XNamespace ns = prop.GetValue(attributes, null) as string;
+
                         element.Name = ns + element.Name.ToString();
                     }
                     else
@@ -194,7 +196,7 @@
         {
             Encoding encoding = new UTF8Encoding(false);
 
-            if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
+            if (root.Declaration != null && ! String.IsNullOrEmpty(root.Declaration.Encoding) &&
                 root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
             {
                 encoding = new UnicodeEncoding(false, false);
@@ -210,6 +212,7 @@
             });
 
             root.Save(xmlWriter);
+
             xmlWriter.Flush();
             xmlWriter.Close();
 
