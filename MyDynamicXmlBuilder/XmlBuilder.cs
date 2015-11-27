@@ -226,18 +226,18 @@
             }               
         }
 
-    /*
+    
         public XDocument ToXDocument()
         {
             return root;
         }
-        */
-        /*public XElement ToXElement()
+        
+        public XElement ToXElement()
         {
             return root.Elements().FirstOrDefault();
         }
-        */
-        /*public XmlDocument ToXmlDocument()
+        
+        public XmlDocument ToXmlDocument()
         {
             var xmlDoc = new XmlDocument();
 
@@ -249,17 +249,23 @@
         public XmlNode ToXmlNode()
         {
             if (root.DocumentType != null && root.Nodes().Count() > 1)
+            {
                 return ToXmlDocument().ChildNodes[1] as XmlNode;
+            }
             else if (root.DocumentType == null && root.Nodes().Count() >= 1)
+            {
                 return ToXmlDocument().FirstChild as XmlNode;
+            }
             else
+            {
                 return null as XmlNode;
+            }                
         }
 
         public XmlElement ToXmlElement()
         {
             return ToXmlNode() as XmlElement;
-        }*/
+        }
     }
 
 }
