@@ -1,13 +1,13 @@
-﻿namespace MyDynamicXmlBuilder
-{
-    using System;
-    using System.Linq;
-    using System.Xml.Linq;
-    using System.Dynamic;
-    using System.IO;
-    using System.Xml;
-    using System.Text;
+﻿using System;
+using System.Linq;
+using System.Xml.Linq;
+using System.Dynamic;
+using System.IO;
+using System.Xml;
+using System.Text;
 
+namespace MyDynamicXmlBuilder
+{
     public sealed class XmlBuilder : DynamicObject
     {
         private XDocument root = new XDocument();
