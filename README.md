@@ -5,13 +5,15 @@ This project is inspired by DynamicXmlBuilder from Ivaylo Kenov
 ## Install
 
 ```
-Install-Package MyDynamicXmlBuilder.dll
+Install-Package MyDynamicXmlBuilder
 ```
 
 ## Documentation
 ```
 using MyDynamicXmlBuilder;
+```
 
+````
 dynamic xml = new XmlBuilder();
 
 xml.Declaration();
