@@ -12,10 +12,11 @@ namespace MyDynamicXmlBuilder.Example
 
             xml.Declaration();
 
-            xml.user("Kiro Zlatniq", new {
+            xml.user("Kiro Zlatniq", new
+            {
                 id = 1,
                 username = "kiro",
-                age = 50
+                age = 50,
             });
 
             Console.WriteLine(xml.ToString(true));

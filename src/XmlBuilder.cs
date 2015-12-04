@@ -196,7 +196,7 @@ namespace MyDynamicXmlBuilder
         {
             Encoding encoding = new UTF8Encoding(false);
 
-            if (root.Declaration != null && ! String.IsNullOrEmpty(root.Declaration.Encoding) &&
+            if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
                 root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
             {
                 encoding = new UnicodeEncoding(false, false);
@@ -204,7 +204,8 @@ namespace MyDynamicXmlBuilder
 
             MemoryStream memoryStream = new MemoryStream();
 
-            XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings {
+            XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
+            {
                 Encoding = encoding,
                 Indent = indent,
                 CloseOutput = true,
@@ -223,20 +224,20 @@ namespace MyDynamicXmlBuilder
             else
             {
                 return Encoding.UTF8.GetString(memoryStream.ToArray());
-            }               
+            }
         }
 
-    
+
         public XDocument ToXDocument()
         {
             return root;
         }
-        
+
         public XElement ToXElement()
         {
             return root.Elements().FirstOrDefault();
         }
-        
+
         public XmlDocument ToXmlDocument()
         {
             var xmlDoc = new XmlDocument();
@@ -259,7 +260,7 @@ namespace MyDynamicXmlBuilder
             else
             {
                 return null as XmlNode;
-            }                
+            }
         }
 
         public XmlElement ToXmlElement()
@@ -267,5 +268,4 @@ namespace MyDynamicXmlBuilder
             return ToXmlNode() as XmlElement;
         }
     }
-
 }
