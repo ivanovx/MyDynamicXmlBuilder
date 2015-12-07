@@ -33,8 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MyDynamicXmlBuilder">
-      <HintPath>..\..\Documents\GitHub\MyDynamicXmlBuilder\src\MyDynamicXmlBuilder\bin\Release\MyDynamicXmlBuilder.dll</HintPath>
+    <Reference Include="MyDynamicXmlBuilder, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MyDynamicXmlBuilder.1.1.0\lib\MyDynamicXmlBuilder.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -51,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
