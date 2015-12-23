@@ -20,14 +20,19 @@ namespace MyDynamicXmlBuilder.Example
              });*/
 
 
-            xml.user(XmlBuilder.Fragment(u => {
-                u.firstname("Kiro");
-                u.lastname("Zlatnia");
-                u.email("kiro@zlatnia.bg");
-                u.phone(new { type = "gsm" }, "(985) 555-1234");
-            }));
+            //xml.Comment("Someone comment");
 
-            
+            xml.user(XmlBuilder.Fragment(user => {
+                user.firstname("Kiro");
+                user.lastname("Zlatnia");
+                user.username("zlatnia");
+                user.age(50);
+                user.email("kiro@zlatnia.bg");
+                user.phone(new {
+                    type = "gsm",
+                    work = true
+                }, "089855533");
+            }));            
 
             Console.WriteLine(xml.ToString(true));
         }

@@ -8,263 +8,277 @@ using System.Text;
 
 namespace MyDynamicXmlBuilder
 {
-    public sealed class XmlBuilder : DynamicObject
-    {
-        private XDocument root = new XDocument();
-        private XContainer current;
+	/// <summary>
+	/// Dynamic XML construction API for .NET
+	/// </summary>
+	/// 
+	/// <copyright>
+	/// (c) Ivan Ivanov, 2015 - http://csyntax.github.io
+	/// </copyright>
 
-        public XmlBuilder()
-        {
-            current = root;
-        }
+	public sealed class XmlBuilder : DynamicObject
+	{
+		private XDocument root = new XDocument();
+		private XContainer current;
 
-        public static Action Fragment(Action fragmentBuilder)
-        {
-            if (fragmentBuilder == null)
-            {
-                throw new ArgumentNullException("fragmentBuilder");
-            }
+		public XmlBuilder()
+		{
+			current = root;
+		}
 
-            return fragmentBuilder;
-        }
+		public static Action Fragment(Action fragmentBuilder)
+		{
+			if (fragmentBuilder == null)
+			{
+				throw new ArgumentNullException("fragmentBuilder");
+			}
 
-        public static Action<dynamic> Fragment(Action<dynamic> fragmentBuilder)
-        {
-            if (fragmentBuilder == null)
-            {
-                throw new ArgumentNullException("fragmentBuilder");
-            }
+			return fragmentBuilder;
+		}
 
-            return fragmentBuilder;
-        }
+		public static Action<dynamic> Fragment(Action<dynamic> fragmentBuilder)
+		{
+			if (fragmentBuilder == null)
+			{
+				throw new ArgumentNullException("fragmentBuilder");
+			}
 
-        public static XmlBuilder Build(Action<dynamic> builder)
-        {
-            if (builder == null)
-            {
-                throw new ArgumentNullException("builder");
-            }
+			return fragmentBuilder;
+		}
 
-            XmlBuilder xmlBuilder = new XmlBuilder();
+		public static XmlBuilder Build(Action<dynamic> builder)
+		{
+			if (builder == null)
+			{
+				throw new ArgumentNullException("builder");
+			}
 
-            builder(xmlBuilder);
+			XmlBuilder xmlBuilder = new XmlBuilder();
 
-            return xmlBuilder;
-        }
+			builder(xmlBuilder);
 
-        /*public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
-        {
-            result = null;
+			return xmlBuilder;
+		}
 
-            string tagName = binder.Name;
+		/*public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+		{
+			result = null;
 
-            Tag(tagName, args);
+			string tagName = binder.Name;
 
-            return true;
-        } */
+			Tag(tagName, args);
 
-        public void Tag(string tagName, params object[] args)
-        {
-            if (String.IsNullOrEmpty(tagName))
-            {
-                throw new ArgumentNullException("tagName");
-            }
+			return true;
+		} */
 
-            if (tagName.IndexOf('_') == 0)
-            {
-                tagName = tagName.Substring(1);
-            }
+			// Todo remove Tag
+		public void Tag(string tagName, params object[] args)
+		{
+			if (String.IsNullOrEmpty(tagName))
+			{
+				throw new ArgumentNullException("tagName");
+			}
 
-            string content = null;
-            object attributes = null;
+			if (tagName.IndexOf('_') == 0)
+			{
+				tagName = tagName.Substring(1);
+			}
 
-            Action fragment = null;
+			string content = null;
+			object attributes = null;
 
-            args.ToList().ForEach(arg => {
-                if (arg is Action)
-                {
-                    fragment = arg as Action;
+			Action fragment = null;
 
-                }
-                else if (arg is Action<dynamic>)
-                {
-                    fragment = () => (arg as Action<dynamic>)(this);
-                }
-                else if (arg is string)
-                {
-                    content = arg as string;
-                }
-                else if (arg.GetType().IsValueType)
-                {
-                    content = arg.ToString();
-                }
-                else
-                {
-                    attributes = arg;
-                }
-            });
+			args.ToList().ForEach(arg => {
+				if (arg is Action)
+				{
+					fragment = arg as Action;
 
-            XElement element = new XElement(tagName);
+				}
+				else if (arg is Action<dynamic>)
+				{
+					fragment = () => (arg as Action<dynamic>)(this);
+				}
+				else if (arg is string)
+				{
+					content = arg as string;
+				}
+				else if (arg.GetType().IsValueType)
+				{
+					content = arg.ToString();
+				}
+				else
+				{
+					attributes = arg;
+				}
+			});
 
-            current.Add(element);
+			XElement element = new XElement(tagName);
 
-            if (fragment != null)
-            {
-                current = element;
-            }
+			current.Add(element);
 
-            if (!String.IsNullOrEmpty(content))
-            {
-                element.Add(content);
-            }
+			if (fragment != null)
+			{
+				current = element;
+			}
 
-            if (attributes != null)
-            {
-                attributes.GetType().GetProperties().ToList().ForEach(prop =>
-                {
-                    if (prop.Name == "xmlns")
-                    {
-                        XNamespace ns = prop.GetValue(attributes, null) as string;
+			if (!String.IsNullOrEmpty(content))
+			{
+				element.Add(content);
+			}
 
-                        element.Name = ns + element.Name.ToString();
-                    }
-                    else
-                    {
-                        element.Add(new XAttribute(prop.Name, prop.GetValue(attributes, null)));
-                    }
-                });
-            }
+			if (attributes != null)
+			{
+				attributes.GetType().GetProperties().ToList().ForEach(prop =>
+				{
+					if (prop.Name == "xmlns")
+					{
+						XNamespace ns = prop.GetValue(attributes, null) as string;
 
-            if (fragment != null)
-            {
-                fragment();
-                current = element.Parent;
-            }
-        }
+						element.Name = ns + element.Name.ToString();
+					}
+					else
+					{
+						element.Add(new XAttribute(prop.Name, prop.GetValue(attributes, null)));
+					}
+				});
+			}
 
-        public void Comment(string comment)
-        {
-            if (String.IsNullOrEmpty(comment))
-            {
-                throw new ArgumentNullException("comment");
-            }
+			if (fragment != null)
+			{
+				fragment();
+				current = element.Parent;
+			}
+		}
 
-            current.Add(new XComment(comment));
-        }
+		public void Comment(string comment)
+		{
+			if (String.IsNullOrEmpty(comment))
+			{
+				throw new ArgumentNullException("comment");
+			}
 
-        public void CData(string data)
-        {
-            if (String.IsNullOrEmpty(data))
-            {
-                throw new ArgumentNullException("data");
-            }
+			current.Add(new XComment(comment));
+		}
 
-            current.Add(new XCData(data));
-        }
+		public void CData(string data)
+		{
+			if (String.IsNullOrEmpty(data))
+			{
+				throw new ArgumentNullException("data");
+			}
 
-        public void Text(string text)
-        {
-            if (String.IsNullOrEmpty(text))
-            {
-                throw new ArgumentNullException("text");
-            }
+			current.Add(new XCData(data));
+		}
 
-            current.Add(new XText(text));
-        }
+		public void Text(string text)
+		{
+			if (String.IsNullOrEmpty(text))
+			{
+				throw new ArgumentNullException("text");
+			}
 
-        public void Declaration(string version = null, string encoding = null, string standalone = null)
-        {
-            root.Declaration = new XDeclaration(version, encoding, standalone);
-        }
+			current.Add(new XText(text));
+		}
 
-        public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
-        {
-            if (String.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException("name");
-            }
+		/*public void Declaration()
+		{
+			root.Declaration = new XDeclaration(null, null, null);
+		}*/
 
-            root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
-        }
+		public void Declaration(string version = null, string encoding = null, string standalone = null)
+		{
+			root.Declaration = new XDeclaration(version, encoding, standalone);
+		}
 
-        public static implicit operator string (XmlBuilder xml)
-        {
-            return xml.ToString(false);
-        }
+		public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
+		{
+			if (String.IsNullOrEmpty(name))
+			{
+				throw new ArgumentNullException("name");
+			}
 
-        public string ToString(bool indent)
-        {
-            Encoding encoding = new UTF8Encoding(false);
+			root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
+		}
 
-            if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
-                root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
-            {
-                encoding = new UnicodeEncoding(false, false);
-            }
+		public static implicit operator string (XmlBuilder xml)
+		{
+			return xml.ToString(false);
+		}
 
-            MemoryStream memoryStream = new MemoryStream();
+		public string ToString(bool indent)
+		{
+			Encoding encoding = new UTF8Encoding(false);
 
-            XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
-            {
-                Encoding = encoding,
-                Indent = indent,
-                CloseOutput = true,
-                OmitXmlDeclaration = root.Declaration == null
-            });
+			if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
+				root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
+			{
+				encoding = new UnicodeEncoding(false, false);
+			}
 
-            root.Save(xmlWriter);
+			MemoryStream memoryStream = new MemoryStream();
 
-            xmlWriter.Flush();
-            xmlWriter.Close();
+			XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
+			{
+				Encoding = encoding,
+				Indent = indent,
+				CloseOutput = true,
+				OmitXmlDeclaration = root.Declaration == null
+			});
 
-            if (encoding is UnicodeEncoding)
-            {
-                return Encoding.Unicode.GetString(memoryStream.ToArray());
-            }
-            else
-            {
-                return Encoding.UTF8.GetString(memoryStream.ToArray());
-            }
-        }
+			root.Save(xmlWriter);
 
-        public XDocument ToXDocument()
-        {
-            return root;
-        }
+			xmlWriter.Flush();
+			xmlWriter.Close();
 
-        public XElement ToXElement()
-        {
-            return root.Elements().FirstOrDefault();
-        }
+			if (encoding is UnicodeEncoding)
+			{
+				return Encoding.Unicode.GetString(memoryStream.ToArray());
+			}
+			else
+			{
+				return Encoding.UTF8.GetString(memoryStream.ToArray());
+			}
+		}
 
-        public XmlDocument ToXmlDocument()
-        {
-            var xmlDoc = new XmlDocument();
+		public XDocument ToXDocument()
+		{
+			return root;
+		}
 
-            xmlDoc.Load(root.CreateReader());
+		public XElement ToXElement()
+		{
+			return root.Elements().FirstOrDefault();
+		}
 
-            return xmlDoc;
-        }
+		public XmlDocument ToXmlDocument()
+		{
+			var xmlDoc = new XmlDocument();
 
-        public XmlNode ToXmlNode()
-        {
-            if (root.DocumentType != null && root.Nodes().Count() > 1)
-            {
-                return ToXmlDocument().ChildNodes[1] as XmlNode;
-            }
-            else if (root.DocumentType == null && root.Nodes().Count() >= 1)
-            {
-                return ToXmlDocument().FirstChild as XmlNode;
-            }
-            else
-            {
-                return null as XmlNode;
-            }
-        }
+			xmlDoc.Load(root.CreateReader());
 
-        public XmlElement ToXmlElement()
-        {
-            return ToXmlNode() as XmlElement;
-        }
-    }
+			return xmlDoc;
+		}
+
+		public XmlNode ToXmlNode()
+		{
+			if (root.DocumentType != null && root.Nodes().Count() > 1)
+			{
+				return ToXmlDocument().ChildNodes[1] as XmlNode;
+			}
+			else if (root.DocumentType == null && root.Nodes().Count() >= 1)
+			{
+				return ToXmlDocument().FirstChild as XmlNode;
+			}
+			else
+			{
+				return null as XmlNode;
+			}
+		}
+
+		public XmlElement ToXmlElement()
+		{
+			return ToXmlNode() as XmlElement;
+		}
+	}
 }
