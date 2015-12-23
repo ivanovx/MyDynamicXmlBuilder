@@ -52,7 +52,7 @@ namespace MyDynamicXmlBuilder
             return xmlBuilder;
         }
 
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        /*public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             result = null;
 
@@ -61,7 +61,7 @@ namespace MyDynamicXmlBuilder
             Tag(tagName, args);
 
             return true;
-        }
+        } */
 
         public void Tag(string tagName, params object[] args)
         {
@@ -226,7 +226,6 @@ namespace MyDynamicXmlBuilder
                 return Encoding.UTF8.GetString(memoryStream.ToArray());
             }
         }
-
 
         public XDocument ToXDocument()
         {
