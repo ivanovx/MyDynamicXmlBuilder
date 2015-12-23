@@ -1,6 +1,6 @@
-# MyDynamicXmlBuilder (RC)
+# MyDynamicXmlBuilder (Beta)
 
-TODO
+Dynamic XML construction API for .NET
 
 ## Install
 
