@@ -1,6 +1,6 @@
-# MyDynamicXmlBuilder
+# MyDynamicXmlBuilder (RC)
 
-This project is inspired by DynamicXmlBuilder from Ivaylo Kenov
+TODO
 
 ## Install
 
@@ -23,3 +23,5 @@ xml.user("Kiro Zlatniq", new {
     age = 50
 });
 ```
+
+[Another dynamic xml build by Ivaylo Kenov](https://github.com/ivaylokenov/DynamicXMLBuilder)
