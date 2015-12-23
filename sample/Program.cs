@@ -24,10 +24,10 @@ namespace MyDynamicXmlBuilder.Example
                 u.firstname("Kiro");
                 u.lastname("Zlatnia");
                 u.email("kiro@zlatnia.bg");
-                u.phone(new { type = "cell" }, "(985) 555-1234");
+                u.phone(new { type = "gsm" }, "(985) 555-1234");
             }));
 
-
+            
 
             Console.WriteLine(xml.ToString(true));
         }
