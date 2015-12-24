@@ -71,7 +71,7 @@ namespace MyDynamicXmlBuilder
 			return true;
 		} */
 
-			// Todo remove Tag
+		// Todo remove Tag
 		public void Tag(string tagName, params object[] args)
 		{
 			if (String.IsNullOrEmpty(tagName))
@@ -180,11 +180,6 @@ namespace MyDynamicXmlBuilder
 
 			current.Add(new XText(text));
 		}
-
-		/*public void Declaration()
-		{
-			root.Declaration = new XDeclaration(null, null, null);
-		}*/
 
 		public void Declaration(string version = null, string encoding = null, string standalone = null)
 		{
