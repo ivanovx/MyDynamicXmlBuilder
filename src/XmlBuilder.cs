@@ -204,46 +204,9 @@ namespace MyDynamicXmlBuilder
 		}
 
 		/*
-			 implicit toString
+			ToString with bool option is a private
 		*/
-		public override string ToString()
-		{
-			//return base.ToString();
-
-			Encoding encoding = new UTF8Encoding(false);
-
-			if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
-				root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
-			{
-				encoding = new UnicodeEncoding(false, false);
-			}
-
-			MemoryStream memoryStream = new MemoryStream();
-
-			XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
-			{
-				Encoding = encoding,
-				Indent = true,
-				CloseOutput = true,
-				OmitXmlDeclaration = root.Declaration == null
-			});
-
-			root.Save(xmlWriter);
-
-			xmlWriter.Flush();
-			xmlWriter.Close();
-
-			if (encoding is UnicodeEncoding)
-			{
-				return Encoding.Unicode.GetString(memoryStream.ToArray());
-			}
-			else
-			{
-				return Encoding.UTF8.GetString(memoryStream.ToArray());
-			}
-		}
-
-		public string ToString(bool indent)
+		private string ToString(bool indent)
 		{
 			Encoding encoding = new UTF8Encoding(false);
 
@@ -278,6 +241,49 @@ namespace MyDynamicXmlBuilder
 			}
 		}
 
+		/*
+			new ToString method
+		*/
+		public override string ToString()
+		{
+			//return base.ToString();
+
+			/*Encoding encoding = new UTF8Encoding(false);
+
+			if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
+				root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
+			{
+				encoding = new UnicodeEncoding(false, false);
+			}
+
+			MemoryStream memoryStream = new MemoryStream();
+
+			XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
+			{
+				Encoding = encoding,
+				Indent = true,
+				CloseOutput = true,
+				OmitXmlDeclaration = root.Declaration == null
+			});
+
+			root.Save(xmlWriter);
+
+			xmlWriter.Flush();
+			xmlWriter.Close();
+
+			if (encoding is UnicodeEncoding)
+			{
+				return Encoding.Unicode.GetString(memoryStream.ToArray());
+			}
+			else
+			{
+				return Encoding.UTF8.GetString(memoryStream.ToArray());
+			}*/
+
+			return this.ToString(true);
+		}
+
+		
 		/*
 			This methods is been removed in 2.0.0 stable
 		*/

@@ -12,15 +12,7 @@ namespace MyDynamicXmlBuilder.Example
 
             xml.Declaration();
 
-            /* xml.user("Kiro Zlatniq", new
-             {
-                 id = 1,
-                 username = "kiro",
-                 age = 50,
-             });*/
-
-
-            //xml.Comment("Someone comment");
+            xml.Comment("Someone comment");
 
             xml.user(XmlBuilder.Fragment(user => {
                 user.firstname("Kiro");
