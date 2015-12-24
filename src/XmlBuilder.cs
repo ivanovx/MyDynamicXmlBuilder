@@ -60,7 +60,7 @@ namespace MyDynamicXmlBuilder
 			return xmlBuilder;
 		}
 
-		/*public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+		public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
 		{
 			result = null;
 
@@ -69,10 +69,12 @@ namespace MyDynamicXmlBuilder
 			Tag(tagName, args);
 
 			return true;
-		} */
+		} 
 
-		// Todo remove Tag
-		public void Tag(string tagName, params object[] args)
+		/*
+			!!!!!!!!!! PUBLIC TO PRIVATE
+		*/
+		private void Tag(string tagName, params object[] args)
 		{
 			if (String.IsNullOrEmpty(tagName))
 			{
@@ -201,6 +203,46 @@ namespace MyDynamicXmlBuilder
 			return xml.ToString(false);
 		}
 
+		/*
+			 implicit toString
+		*/
+		public override string ToString()
+		{
+			//return base.ToString();
+
+			Encoding encoding = new UTF8Encoding(false);
+
+			if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
+				root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
+			{
+				encoding = new UnicodeEncoding(false, false);
+			}
+
+			MemoryStream memoryStream = new MemoryStream();
+
+			XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
+			{
+				Encoding = encoding,
+				Indent = true,
+				CloseOutput = true,
+				OmitXmlDeclaration = root.Declaration == null
+			});
+
+			root.Save(xmlWriter);
+
+			xmlWriter.Flush();
+			xmlWriter.Close();
+
+			if (encoding is UnicodeEncoding)
+			{
+				return Encoding.Unicode.GetString(memoryStream.ToArray());
+			}
+			else
+			{
+				return Encoding.UTF8.GetString(memoryStream.ToArray());
+			}
+		}
+
 		public string ToString(bool indent)
 		{
 			Encoding encoding = new UTF8Encoding(false);
@@ -236,6 +278,9 @@ namespace MyDynamicXmlBuilder
 			}
 		}
 
+		/*
+			This methods is been removed in 2.0.0 stable
+		*/
 		public XDocument ToXDocument()
 		{
 			return root;

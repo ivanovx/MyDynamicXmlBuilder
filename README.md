@@ -32,19 +32,18 @@ xml.user(XmlBuilder.Fragment(u => {
 Console.WriteLine(xml.ToString(true));
 ```
 
-[Another dynamic xml build by Ivaylo Kenov](https://github.com/ivaylokenov/DynamicXMLBuilder)
+*[Another demo](https://github.com/csyntax/Talks/tree/master/DemoMyDynamicXmlBuider)
+*[Another dynamic xml builder by Ivaylo Kenov](https://github.com/ivaylokenov/DynamicXMLBuilder)
 
 ## TODO
-* Declaration -> Declare
-* Section -> Fragment
-* true of false in ToString
-* add license
-* add summary
-* add tutorial
+- Declaration -> Declare
+- Section -> Fragment
+- true of false in ToString
 
 *removed methods or make private
-* 23-12-2015 - TryInvokeMember is removed
-* todo Tag and Text members are partital removed
+	* 23-12-2015 - TryInvokeMember is added
+	* 24-12-2015 - TryInvokeMember - find and remove bug
+	* 24-12-2015 - Tag and Text members are private
 
 * New features in 2.0.0
 * 23-12-2015 add xml comment - xml.Comment("Someone comment")
