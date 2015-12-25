@@ -287,17 +287,17 @@ namespace MyDynamicXmlBuilder
 		/*
 			This methods is been removed in 2.0.0 stable
 		*/
-		public XDocument ToXDocument()
+		private XDocument ToXDocument()
 		{
 			return root;
 		}
 
-		public XElement ToXElement()
+		private XElement ToXElement()
 		{
 			return root.Elements().FirstOrDefault();
 		}
 
-		public XmlDocument ToXmlDocument()
+		private XmlDocument ToXmlDocument()
 		{
 			var xmlDoc = new XmlDocument();
 
@@ -306,7 +306,7 @@ namespace MyDynamicXmlBuilder
 			return xmlDoc;
 		}
 
-		public XmlNode ToXmlNode()
+		private XmlNode ToXmlNode()
 		{
 			if (root.DocumentType != null && root.Nodes().Count() > 1)
 			{
@@ -322,7 +322,7 @@ namespace MyDynamicXmlBuilder
 			}
 		}
 
-		public XmlElement ToXmlElement()
+		private XmlElement ToXmlElement()
 		{
 			return ToXmlNode() as XmlElement;
 		}
