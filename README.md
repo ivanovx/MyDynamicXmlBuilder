@@ -1,10 +1,10 @@
-# MyDynamicXmlBuilder (Beta)
+# MyDynamicXmlBuilder (RC)
 
 Dynamic XML construction API for .NET
 
 ## Install
 
-* Stable version - 1.1.0
+* Latest Stable version - 1.1.0
 ```
 Install-Package MyDynamicXmlBuilder
 ```
@@ -15,7 +15,7 @@ Install-Package MyDynamicXmlBuilder -Pre
 ```
 
 ## Documentation
-```
+```cs
 using MyDynamicXmlBuilder;
 ```
 
@@ -63,13 +63,6 @@ Console.WriteLine(xml.ToString(true));
 - Section -> Fragment
 - true of false in ToString
 
-
-* 23-12-2015 - TryInvokeMember is added
-* 23-12-2015 - feature for make comment
-* 24-12-2015 - TryInvokeMember - find and remove bug
-* 24-12-2015 - Tag and Text members are private
-* 24-12-2015 - new ToString method with out bool operations
-* 24-12-2015 - ToString(bool indent) are private
-
-* New features in 2.0.0
-* 23-12-2015 add xml comment - xml.Comment("Someone comment")
+## New features in 2.0.0 RC
+* xml.Comment("Someone comment")
+* ToString with auto indent (dont use bool opartions in ToString method)
