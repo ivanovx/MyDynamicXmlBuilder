@@ -201,7 +201,7 @@ namespace MyDynamicXmlBuilder
 
 		public static implicit operator string (XmlBuilder xml)
 		{
-			return xml.ToString(false);
+			return xml.ToString(false); // Todo true
 		}
 
 		/*
