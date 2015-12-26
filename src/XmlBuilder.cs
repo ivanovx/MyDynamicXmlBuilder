@@ -72,6 +72,7 @@ namespace MyDynamicXmlBuilder
 		} 
 
 		/*
+			Ver 2.0.0 RC
 			!!!!!!!!!! PUBLIC TO PRIVATE
 		*/
 		private void Tag(string tagName, params object[] args)
@@ -205,6 +206,7 @@ namespace MyDynamicXmlBuilder
 
 		/*
 			ToString with bool option is a private
+			ver 2.0.0 RC
 		*/
 		private string ToString(bool indent)
 		{
