@@ -1,17 +1,10 @@
-# MyDynamicXmlBuilder (RC)
+# MyDynamicXmlBuilder
 
 Dynamic XML construction API for .NET
 
 ## Install
-
-* Latest Stable version - 1.1.0
-```
+```powershell
 Install-Package MyDynamicXmlBuilder
-```
-
-* Beta version - 2.0.0
-```
-Install-Package MyDynamicXmlBuilder -Pre
 ```
 
 ## Documentation
@@ -54,15 +47,17 @@ xml.user(XmlBuilder.Fragment(user => {
 Console.WriteLine(xml.ToString(true));
 ```
 
-*[Another demo](https://github.com/csyntax/Talks/tree/master/DemoMyDynamicXmlBuider)
+* [Another demo](https://github.com/csyntax/Talks/tree/master/DemoMyDynamicXmlBuider)
 
-*[Another dynamic xml builder by Ivaylo Kenov](https://github.com/ivaylokenov/DynamicXMLBuilder)
+* [Another dynamic xml builder by Ivaylo Kenov](https://github.com/ivaylokenov/DynamicXMLBuilder)
 
 ## TODO
-- Declaration -> Declare
-- Section -> Fragment
-- true of false in ToString
+- Declaration -> Declare - version 2.1.1
+- Section -> Fragment - version 2.1.1
+- true of false in ToString - version 2.1.1
 
 ## New features in 2.0.0 RC
 * xml.Comment("Someone comment")
 * ToString with auto indent (dont use bool opartions in ToString method)
+
+## Comming version 2.1.1
