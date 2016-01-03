@@ -14,19 +14,16 @@ namespace MyDynamicXmlBuilder.Example
 
             xml.Comment("Someone comment");
 
-            xml.user(XmlBuilder.Fragment(user => {
+            xml.user(new { id = 1 }, XmlBuilder.Fragment(user => {
                 user.firstname("Kiro");
                 user.lastname("Zlatnia");
                 user.username("zlatnia");
                 user.age(50);
                 user.email("kiro@zlatnia.bg");
-                user.phone(new {
-                    type = "gsm",
-                    work = true
-                }, "089855533");
+                user.phone("089855533");
             }));            
 
-            Console.WriteLine(xml.ToString(true));
+            Console.WriteLine(xml);
         }
     }
 }
