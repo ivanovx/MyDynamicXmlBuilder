@@ -2,12 +2,16 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+/*
+2015 - 2016
+*/
+
 [assembly: AssemblyTitle("MyDynamicXmlBuilder")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MyDynamicXmlBuilder")]
-[assembly: AssemblyCopyright("Copyright © 2015 Ivan Ivanov and Kodim Open Source Foundation")]
+[assembly: AssemblyCopyright("Copyright © 2015 Ivan Ivanov")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

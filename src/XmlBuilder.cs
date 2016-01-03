@@ -6,15 +6,19 @@ using System.IO;
 using System.Xml;
 using System.Text;
 
+/// <summary>
+///     Dynamic XML construction API for .NET
+/// </summary>
 namespace MyDynamicXmlBuilder
 {
 	/// <summary>
-	/// Dynamic XML construction API for .NET
+	///     Dynamic XML construction API for .NET
 	/// </summary>
 	/// 
 	/// <copyright>
-	/// (c) Ivan Ivanov, 2015 - http://csyntax.github.io
+	///     (c) Ivan Ivanov, 2015 - http://csyntax.github.io
 	/// </copyright>
+	/// <see cref="https://github.com/csyntax/MyDynamicXmlBuilder/blob/master/README.md"/>
 
 	public sealed class XmlBuilder : DynamicObject
 	{
@@ -199,9 +203,12 @@ namespace MyDynamicXmlBuilder
 			root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
 		}
 
+		/*
+			Ver 2.1.0 will be remove toString operator with bool options for indent
+		*/
 		public static implicit operator string (XmlBuilder xml)
 		{
-			return xml.ToString(false); // Todo true
+			return xml.ToString(true);
 		}
 
 		/*
@@ -243,45 +250,8 @@ namespace MyDynamicXmlBuilder
 			}
 		}
 
-		/*
-			new ToString method
-		*/
 		public override string ToString()
 		{
-			//return base.ToString();
-
-			/*Encoding encoding = new UTF8Encoding(false);
-
-			if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
-				root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
-			{
-				encoding = new UnicodeEncoding(false, false);
-			}
-
-			MemoryStream memoryStream = new MemoryStream();
-
-			XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
-			{
-				Encoding = encoding,
-				Indent = true,
-				CloseOutput = true,
-				OmitXmlDeclaration = root.Declaration == null
-			});
-
-			root.Save(xmlWriter);
-
-			xmlWriter.Flush();
-			xmlWriter.Close();
-
-			if (encoding is UnicodeEncoding)
-			{
-				return Encoding.Unicode.GetString(memoryStream.ToArray());
-			}
-			else
-			{
-				return Encoding.UTF8.GetString(memoryStream.ToArray());
-			}*/
-
 			return this.ToString(true);
 		}
 
