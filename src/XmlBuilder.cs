@@ -7,7 +7,7 @@ using System.Xml;
 using System.Text;
 
 /// <summary>
-///     Dynamic XML construction API for .NET
+/// Dynamic XML construction API for .NET
 /// </summary>
 namespace MyDynamicXmlBuilder
 {
