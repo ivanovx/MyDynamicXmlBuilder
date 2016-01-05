@@ -2,13 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-/*
-    Todo
-    Add AssemblyDescription 
-*/
-
 [assembly: AssemblyTitle("MyDynamicXmlBuilder")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Dynamic XML construction API for .NET")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MyDynamicXmlBuilder")]
