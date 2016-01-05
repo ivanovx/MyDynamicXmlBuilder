@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("MyDynamicXmlBuilder")]
-[assembly: AssemblyCopyright("Copyright © 2015 Ivan Ivanov")]
+[assembly: AssemblyCopyright("Copyright © 2015 - 2016 Ivan Ivanov")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

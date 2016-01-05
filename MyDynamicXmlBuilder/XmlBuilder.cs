@@ -15,11 +15,10 @@ namespace MyDynamicXmlBuilder
 	/// <copyright>
 	/// (c) Ivan Ivanov, 2015 - http://csyntax.github.io
 	/// </copyright>
-	/// <see cref="https://github.com/csyntax/MyDynamicXmlBuilder/blob/master/README.md" />
-	public class XmlBuilder : DynamicObject
+	public sealed class XmlBuilder : DynamicObject
 	{
-		private XDocument root = new XDocument();
-		private XContainer current;
+		private static XDocument root = new XDocument();
+		private static XContainer current;
 
 		public XmlBuilder()
 		{
@@ -195,19 +194,12 @@ namespace MyDynamicXmlBuilder
 			root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
 		}
 
-		/*
-			Ver 2.1.0 will be remove toString operator with bool options for indent
-		*/
 		public static implicit operator string(XmlBuilder xml)
 		{
-			return xml.ToString(true);
+			return xml.ToString();
 		}
-
-		/*
-			ToString with bool option is a private
-			ver 2.0.0 RC
-		*/
-		private string ToString(bool indent)
+		
+		public override string ToString()
 		{
 			Encoding encoding = new UTF8Encoding(false);
 
@@ -222,7 +214,7 @@ namespace MyDynamicXmlBuilder
 			XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
 			{
 				Encoding = encoding,
-				Indent = indent,
+				Indent = true,
 				CloseOutput = true,
 				OmitXmlDeclaration = root.Declaration == null
 			});
@@ -241,16 +233,8 @@ namespace MyDynamicXmlBuilder
 				return Encoding.UTF8.GetString(memoryStream.ToArray());
 			}
 		}
-
-		public override string ToString()
-		{
-			return this.ToString(true);
-		}
-
-
+		
 		/*
-			This methods is been removed in 2.0.0 stable
-		*/
 		private XDocument ToXDocument()
 		{
 			return root;
@@ -290,5 +274,6 @@ namespace MyDynamicXmlBuilder
 		{
 			return ToXmlNode() as XmlElement;
 		}
+		*/
 	}
 }
