@@ -27,30 +27,30 @@ namespace MyDynamicXmlBuilder
 
 		public static Action Section(Action fragmentBuilder)
 		{
-			if (fragmentBuilder == null)
+			/*if (fragmentBuilder == null)
 			{
 				throw new ArgumentNullException("fragmentBuilder");
-			}
+			}*/
 
 			return fragmentBuilder;
 		}
 
 		public static Action<dynamic> Section(Action<dynamic> fragmentBuilder)
 		{
-			if (fragmentBuilder == null)
+			/*if (fragmentBuilder == null)
 			{
 				throw new ArgumentNullException("fragmentBuilder");
-			}
+			}*/
 
 			return fragmentBuilder;
 		}
 
 		public static XmlBuilder Build(Action<dynamic> builder)
 		{
-			if (builder == null)
+			/*if (builder == null)
 			{
 				throw new ArgumentNullException("builder");
-			}
+			}*/
 
 			XmlBuilder xmlBuilder = new XmlBuilder();
 
@@ -151,30 +151,30 @@ namespace MyDynamicXmlBuilder
 
 		public void Comment(string comment)
 		{
-			if (String.IsNullOrEmpty(comment))
+			/*if (String.IsNullOrEmpty(comment))
 			{
 				throw new ArgumentNullException("comment");
-			}
+			}*/
 
 			current.Add(new XComment(comment));
 		}
 
 		public void CData(string data)
 		{
-			if (String.IsNullOrEmpty(data))
+			/*if (String.IsNullOrEmpty(data))
 			{
 				throw new ArgumentNullException("data");
-			}
+			}*/
 
 			current.Add(new XCData(data));
 		}
 
 		public void Text(string text)
 		{
-			if (String.IsNullOrEmpty(text))
+			/*if (String.IsNullOrEmpty(text))
 			{
 				throw new ArgumentNullException("text");
-			}
+			}*/
 
 			current.Add(new XText(text));
 		}
@@ -186,10 +186,10 @@ namespace MyDynamicXmlBuilder
 
 		public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
 		{
-			if (String.IsNullOrEmpty(name))
+			/*if (String.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name");
-			}
+			}*/
 
 			root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
 		}

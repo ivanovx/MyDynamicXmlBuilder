@@ -7,7 +7,7 @@ namespace MyDynamicXmlBuilder.Example
 	{
 		public static void Main(string[] args)
 		{
-			dynamic xml = new XmlBuilder();
+            var xml = MyXml.Create();
 						
 			xml.Declaration();
 
