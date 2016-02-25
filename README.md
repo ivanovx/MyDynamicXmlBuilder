@@ -61,3 +61,10 @@ Console.WriteLine(xml.ToString(true));
 * ToString with auto indent (dont use bool opartions in ToString method)
 
 ## Comming version 2.1.1
+
+````cs
+using(dynamic xml = new XmlBuilder())
+{
+	xml.Declaration();
+}
+```
