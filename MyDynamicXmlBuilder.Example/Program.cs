@@ -8,24 +8,27 @@ namespace MyDynamicXmlBuilder.Example
 		public static void Main(string[] args)
 		{
             var xml = MyXml.Create();
-						
-			xml.Declaration();
 
-			xml.Comment("Someone comment");
+            using (xml as IDisposable)
+            {
+                xml.Declaration();
 
-			xml.Users(XmlBuilder.Section(users =>
-			{
-				xml.User(new { Id = 1 }, XmlBuilder.Section(user => {
-					user.FirstName("Kiro");
-					user.LastName("Zlatnia");
-					user.UserName("zlatnia");
-					user.Age(50);
-					user.Email("kiro@zlatnia.bg");
-					user.Phone("089855533");
-				}));
-			}));
+                xml.Comment("Someone comment");
 
-			Console.WriteLine(xml);
+                xml.Users(XmlBuilder.Section(users => {
+                   users.Comment("Users");
+                   users.User(new { Id = 1 }, XmlBuilder.Section(user => {
+                        user.FirstName("Kiro");
+                        user.LastName("Zlatnia");
+                        user.UserName("zlatnia");
+                        user.Age(50);
+                        user.Email("kiro@zlatnia.bg");
+                        user.Phone("089855533");
+                    }));
+                }));
+
+                Console.WriteLine(xml);
+            }
 		}
 	}
 }

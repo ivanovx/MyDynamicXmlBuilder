@@ -72,10 +72,10 @@ namespace MyDynamicXmlBuilder
 
 		public void Tag(string tagName, params object[] args)
 		{
-			if (String.IsNullOrEmpty(tagName))
+			/*if (String.IsNullOrEmpty(tagName))
 			{
 				throw new ArgumentNullException("tagName");
-			}
+			}*/
 
 			if (tagName.IndexOf('_') == 0)
 			{
@@ -148,6 +148,7 @@ namespace MyDynamicXmlBuilder
 				current = element.Parent;
 			}
 		}
+        
 
 		public void Comment(string comment)
 		{
@@ -184,7 +185,8 @@ namespace MyDynamicXmlBuilder
 			root.Declaration = new XDeclaration(version, encoding, standalone);
 		}
 
-		public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
+
+        public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
 		{
 			/*if (String.IsNullOrEmpty(name))
 			{
@@ -233,19 +235,24 @@ namespace MyDynamicXmlBuilder
 				return Encoding.UTF8.GetString(memoryStream.ToArray());
 			}
 		}
-		
-		/*
-		private XDocument ToXDocument()
+
+
+        /*public static dynamic Create()
+        {
+            return new XmlBuilder();
+        }*/
+
+        /*public XDocument ToXDocument()
 		{
 			return root;
 		}
 
-		private XElement ToXElement()
+		public XElement ToXElement()
 		{
 			return root.Elements().FirstOrDefault();
 		}
 
-		private XmlDocument ToXmlDocument()
+		public static XmlDocument ToXmlDocument()
 		{
 			var xmlDoc = new XmlDocument();
 
@@ -254,7 +261,7 @@ namespace MyDynamicXmlBuilder
 			return xmlDoc;
 		}
 
-		private XmlNode ToXmlNode()
+		public XmlNode ToXmlNode()
 		{
 			if (root.DocumentType != null && root.Nodes().Count() > 1)
 			{
@@ -270,10 +277,9 @@ namespace MyDynamicXmlBuilder
 			}
 		}
 
-		private XmlElement ToXmlElement()
+		public XmlElement ToXmlElement()
 		{
 			return ToXmlNode() as XmlElement;
-		}
-		*/
-	}
+		}*/
+    }
 }

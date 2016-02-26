@@ -1,4 +1,6 @@
-﻿namespace MyDynamicXmlBuilder
+﻿using System;
+
+namespace MyDynamicXmlBuilder
 {
     public static class MyXml
     {
