@@ -19,7 +19,7 @@ namespace MyDynamicXmlBuilder
 	{
 		private static XDocument root = new XDocument();
 		private static XContainer current;
-
+        
 		public XmlBuilder()
 		{
 			current = root;
@@ -27,30 +27,30 @@ namespace MyDynamicXmlBuilder
 
 		public static Action Section(Action fragmentBuilder)
 		{
-			/*if (fragmentBuilder == null)
+			if (fragmentBuilder == null)
 			{
 				throw new ArgumentNullException("fragmentBuilder");
-			}*/
+			}
 
 			return fragmentBuilder;
 		}
 
 		public static Action<dynamic> Section(Action<dynamic> fragmentBuilder)
 		{
-			/*if (fragmentBuilder == null)
+			if (fragmentBuilder == null)
 			{
 				throw new ArgumentNullException("fragmentBuilder");
-			}*/
+			}
 
 			return fragmentBuilder;
 		}
 
 		public static XmlBuilder Build(Action<dynamic> builder)
 		{
-			/*if (builder == null)
+			if (builder == null)
 			{
 				throw new ArgumentNullException("builder");
-			}*/
+			}
 
 			XmlBuilder xmlBuilder = new XmlBuilder();
 
@@ -70,12 +70,12 @@ namespace MyDynamicXmlBuilder
 			return true;
 		}
 
-		public void Tag(string tagName, params object[] args)
+        public void Tag(string tagName, params object[] args)
 		{
-			/*if (String.IsNullOrEmpty(tagName))
+			if (String.IsNullOrEmpty(tagName))
 			{
 				throw new ArgumentNullException("tagName");
-			}*/
+			}
 
 			if (tagName.IndexOf('_') == 0)
 			{
@@ -87,29 +87,31 @@ namespace MyDynamicXmlBuilder
 
 			Action fragment = null;
 
-			args.ToList().ForEach(arg => {
-				if (arg is Action)
-				{
-					fragment = arg as Action;
+			args
+                .ToList()
+                .ForEach(arg => {
+				    if (arg is Action)
+				    {
+					    fragment = arg as Action;
 
-				}
-				else if (arg is Action<dynamic>)
-				{
-					fragment = () => (arg as Action<dynamic>)(this);
-				}
-				else if (arg is string)
-				{
-					content = arg as string;
-				}
-				else if (arg.GetType().IsValueType)
-				{
-					content = arg.ToString();
-				}
-				else
-				{
-					attributes = arg;
-				}
-			});
+				    }
+				    else if (arg is Action<dynamic>)
+				    {
+					    fragment = () => (arg as Action<dynamic>)(this);
+				    }
+				    else if (arg is string)
+				    {
+					    content = arg as string;
+				    }
+				    else if (arg.GetType().IsValueType)
+				    {
+					    content = arg.ToString();
+				    }
+				    else
+				    {
+					    attributes = arg;
+				    }
+			    });
 
 			XElement element = new XElement(tagName);
 
@@ -127,19 +129,22 @@ namespace MyDynamicXmlBuilder
 
 			if (attributes != null)
 			{
-				attributes.GetType().GetProperties().ToList().ForEach(prop =>
-				{
-					if (prop.Name == "xmlns")
-					{
-						XNamespace ns = prop.GetValue(attributes, null) as string;
+				attributes
+                    .GetType()
+                    .GetProperties()
+                    .ToList()
+                    .ForEach(prop => {
+					    if (prop.Name == "xmlns")
+					    {
+						    XNamespace ns = prop.GetValue(attributes, null) as string;
 
-						element.Name = ns + element.Name.ToString();
-					}
-					else
-					{
-						element.Add(new XAttribute(prop.Name, prop.GetValue(attributes, null)));
-					}
-				});
+						    element.Name = ns + element.Name.ToString();
+					    }
+					    else
+					    {
+						    element.Add(new XAttribute(prop.Name, prop.GetValue(attributes, null)));
+					    }
+				    });
 			}
 
 			if (fragment != null)
@@ -152,46 +157,51 @@ namespace MyDynamicXmlBuilder
 
 		public void Comment(string comment)
 		{
-			/*if (String.IsNullOrEmpty(comment))
+            if (String.IsNullOrEmpty(comment))
 			{
 				throw new ArgumentNullException("comment");
-			}*/
+			}
 
 			current.Add(new XComment(comment));
 		}
 
 		public void CData(string data)
 		{
-			/*if (String.IsNullOrEmpty(data))
+			if (String.IsNullOrEmpty(data))
 			{
 				throw new ArgumentNullException("data");
-			}*/
+			}
 
 			current.Add(new XCData(data));
 		}
 
 		public void Text(string text)
 		{
-			/*if (String.IsNullOrEmpty(text))
+			if (String.IsNullOrEmpty(text))
 			{
 				throw new ArgumentNullException("text");
-			}*/
+			}
 
 			current.Add(new XText(text));
 		}
 
-		public void Declaration(string version = null, string encoding = null, string standalone = null)
+		/*public void Declaration(string version = null, string encoding = null, string standalone = null)
 		{
 			root.Declaration = new XDeclaration(version, encoding, standalone);
-		}
+		}*/
 
+        public void Declaration()
+        {
+            root.Declaration = new XDeclaration("1.0", "utf-8", "yes");
+        }
+    
 
         public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
 		{
-			/*if (String.IsNullOrEmpty(name))
+			if (String.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name");
-			}*/
+			}
 
 			root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
 		}
