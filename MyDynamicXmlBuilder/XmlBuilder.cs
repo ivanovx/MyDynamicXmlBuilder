@@ -45,7 +45,7 @@ namespace MyDynamicXmlBuilder
 			return fragmentBuilder;
 		}
 
-		public static XmlBuilder Build(Action<dynamic> builder)
+		/*public static XmlBuilder Build(Action<dynamic> builder)
 		{
 			if (builder == null)
 			{
@@ -57,7 +57,7 @@ namespace MyDynamicXmlBuilder
 			builder(xmlBuilder);
 
 			return xmlBuilder;
-		}
+		}*/
 
 		public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
 		{
@@ -153,9 +153,22 @@ namespace MyDynamicXmlBuilder
 				current = element.Parent;
 			}
 		}
-        
 
-		public void Comment(string comment)
+       /* public static XmlBuilder Build(dynamic builder)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException("builder");
+            }
+
+            XmlBuilder xmlBuilder = new XmlBuilder();
+
+            builder(xmlBuilder);
+
+            return xmlBuilder;
+        }*/
+
+        public void Comment(string comment)
 		{
             if (String.IsNullOrEmpty(comment))
 			{
