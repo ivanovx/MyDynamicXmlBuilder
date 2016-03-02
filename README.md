@@ -14,15 +14,15 @@ using MyDynamicXmlBuilder;
 
 * Basic demo
 ```cs
-dynamic xml = new XmlBuilder();
+var xml = MyXml.Create();
 
 xml.Declaration();
 
 xml.user("Kiro Zlatniq", new
 {
-    id = 1,
-    username = "kiro",
-    age = 50,
+	Id = 1,
+    UserName = "kiro",
+    Age = 50,
 });
 ```
 
@@ -49,8 +49,6 @@ xml.Users(XmlBuilder.Section(users => {
 
 Console.WriteLine(xml);
 ```
-
-* with ````cs using``` keyword - comming in version 3.0.0
 
 * [Another demo](https://github.com/csyntax/Talks/tree/master/DemoMyDynamicXmlBuider)
 
