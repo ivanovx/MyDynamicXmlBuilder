@@ -3,11 +3,11 @@ using MyDynamicXmlBuilder;
 
 namespace MyDynamicXmlBuilder.Example
 {
-	class Program
+    internal class Program
 	{
-		public static void Main(string[] args)
+		internal static void Main(string[] args)
 		{
-            var xml = MyXml.Create();
+            var xml = XmlBuilder.Create();
 
             xml.Declaration();
 

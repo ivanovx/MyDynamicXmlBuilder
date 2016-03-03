@@ -11,7 +11,7 @@ namespace MyDynamicXmlBuilder
 	/// <summary>
 	/// Dynamic XML construction API for .NET
 	/// </summary>
-	/// 
+	///
 	/// <copyright>
 	/// (c) Ivan Ivanov, 2015 - http://csyntax.github.io
 	/// </copyright>
@@ -70,9 +70,9 @@ namespace MyDynamicXmlBuilder
 			return true;
 		}
 
-        public void Tag(string tagName, params object[] args)
+        private void Tag(string tagName, params object[] args)
 		{
-			if (String.IsNullOrEmpty(tagName))
+			if (string.IsNullOrEmpty(tagName))
 			{
 				throw new ArgumentNullException("tagName");
 			}
@@ -122,7 +122,7 @@ namespace MyDynamicXmlBuilder
 				current = element;
 			}
 
-			if (!String.IsNullOrEmpty(content))
+			if (!string.IsNullOrEmpty(content))
 			{
 				element.Add(content);
 			}
@@ -170,7 +170,7 @@ namespace MyDynamicXmlBuilder
 
         public void Comment(string comment)
 		{
-            if (String.IsNullOrEmpty(comment))
+            if (string.IsNullOrEmpty(comment))
 			{
 				throw new ArgumentNullException("comment");
 			}
@@ -178,9 +178,9 @@ namespace MyDynamicXmlBuilder
 			current.Add(new XComment(comment));
 		}
 
-		public void CData(string data)
+		/*public void CData(string data)
 		{
-			if (String.IsNullOrEmpty(data))
+			if (string.IsNullOrEmpty(data))
 			{
 				throw new ArgumentNullException("data");
 			}
@@ -196,7 +196,7 @@ namespace MyDynamicXmlBuilder
 			}
 
 			current.Add(new XText(text));
-		}
+		}*/
 
 		/*public void Declaration(string version = null, string encoding = null, string standalone = null)
 		{
@@ -207,9 +207,8 @@ namespace MyDynamicXmlBuilder
         {
             root.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         }
-    
 
-        public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
+       /* public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
 		{
 			if (String.IsNullOrEmpty(name))
 			{
@@ -217,7 +216,7 @@ namespace MyDynamicXmlBuilder
 			}
 
 			root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
-		}
+		}*/
 
 		public static implicit operator string(XmlBuilder xml)
 		{
@@ -228,7 +227,7 @@ namespace MyDynamicXmlBuilder
 		{
 			Encoding encoding = new UTF8Encoding(false);
 
-			if (root.Declaration != null && !String.IsNullOrEmpty(root.Declaration.Encoding) &&
+			if (root.Declaration != null && !string.IsNullOrEmpty(root.Declaration.Encoding) &&
 				root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
 			{
 				encoding = new UnicodeEncoding(false, false);
@@ -259,11 +258,10 @@ namespace MyDynamicXmlBuilder
 			}
 		}
 
-
-        /*public static dynamic Create()
+        public static dynamic Create()
         {
             return new XmlBuilder();
-        }*/
+        }
 
         /*public XDocument ToXDocument()
 		{
