@@ -13,7 +13,7 @@ namespace MyDynamicXmlBuilder
 	/// </summary>
 	///
 	/// <copyright>
-	/// (c) Ivan Ivanov, 2015 - http://csyntax.github.io
+	/// (c) Ivan Ivanov, 2015 - 2016 - http://csyntax.net
 	/// </copyright>
 	public sealed class XmlBuilder : DynamicObject
 	{
@@ -154,20 +154,6 @@ namespace MyDynamicXmlBuilder
 			}
 		}
 
-       /* public static XmlBuilder Build(dynamic builder)
-        {
-            if (builder == null)
-            {
-                throw new ArgumentNullException("builder");
-            }
-
-            XmlBuilder xmlBuilder = new XmlBuilder();
-
-            builder(xmlBuilder);
-
-            return xmlBuilder;
-        }*/
-
         public void Comment(string comment)
 		{
             if (string.IsNullOrEmpty(comment))
@@ -178,45 +164,10 @@ namespace MyDynamicXmlBuilder
 			current.Add(new XComment(comment));
 		}
 
-		/*public void CData(string data)
-		{
-			if (string.IsNullOrEmpty(data))
-			{
-				throw new ArgumentNullException("data");
-			}
-
-			current.Add(new XCData(data));
-		}
-
-		public void Text(string text)
-		{
-			if (String.IsNullOrEmpty(text))
-			{
-				throw new ArgumentNullException("text");
-			}
-
-			current.Add(new XText(text));
-		}*/
-
-		/*public void Declaration(string version = null, string encoding = null, string standalone = null)
-		{
-			root.Declaration = new XDeclaration(version, encoding, standalone);
-		}*/
-
         public void Declaration()
         {
             root.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         }
-
-       /* public void DocumentType(string name, string publicId = null, string systemId = null, string internalSubset = null)
-		{
-			if (String.IsNullOrEmpty(name))
-			{
-				throw new ArgumentNullException("name");
-			}
-
-			root.Add(new XDocumentType(name, publicId, systemId, internalSubset));
-		}*/
 
 		public static implicit operator string(XmlBuilder xml)
 		{
@@ -262,45 +213,5 @@ namespace MyDynamicXmlBuilder
         {
             return new XmlBuilder();
         }
-
-        /*public XDocument ToXDocument()
-		{
-			return root;
-		}
-
-		public XElement ToXElement()
-		{
-			return root.Elements().FirstOrDefault();
-		}
-
-		public static XmlDocument ToXmlDocument()
-		{
-			var xmlDoc = new XmlDocument();
-
-			xmlDoc.Load(root.CreateReader());
-
-			return xmlDoc;
-		}
-
-		public XmlNode ToXmlNode()
-		{
-			if (root.DocumentType != null && root.Nodes().Count() > 1)
-			{
-				return ToXmlDocument().ChildNodes[1] as XmlNode;
-			}
-			else if (root.DocumentType == null && root.Nodes().Count() >= 1)
-			{
-				return ToXmlDocument().FirstChild as XmlNode;
-			}
-			else
-			{
-				return null as XmlNode;
-			}
-		}
-
-		public XmlElement ToXmlElement()
-		{
-			return ToXmlNode() as XmlElement;
-		}*/
     }
 }
