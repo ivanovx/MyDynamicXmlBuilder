@@ -9,7 +9,7 @@ namespace MyDynamicXmlBuilder.Example
 		{
             var xml = XmlBuilder.Create();
 
-            xml.Declaration();
+            //xml.Declaration();
 
             xml.Comment("Someone comment");
 

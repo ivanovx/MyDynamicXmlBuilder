@@ -13,19 +13,19 @@ namespace MyDynamicXmlBuilder
 	/// </summary>
 	///
 	/// <copyright>
-	/// (c) Ivan Ivanov, 2015 - 2016 - http://csyntax.net
+	/// (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
 	/// </copyright>
 	public sealed class XmlBuilder : DynamicObject
 	{
 		private static XDocument root = new XDocument();
-		private static XContainer current;
+		private XContainer current;
         
 		public XmlBuilder()
 		{
-			current = root;
+			this.current = root;
 		}
 
-		public static Action Section(Action fragmentBuilder)
+        public static Action Section(Action fragmentBuilder)
 		{
 			if (fragmentBuilder == null)
 			{
@@ -45,27 +45,13 @@ namespace MyDynamicXmlBuilder
 			return fragmentBuilder;
 		}
 
-		/*public static XmlBuilder Build(Action<dynamic> builder)
-		{
-			if (builder == null)
-			{
-				throw new ArgumentNullException("builder");
-			}
-
-			XmlBuilder xmlBuilder = new XmlBuilder();
-
-			builder(xmlBuilder);
-
-			return xmlBuilder;
-		}*/
-
 		public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
 		{
 			result = null;
 
 			string tagName = binder.Name;
 
-			Tag(tagName, args);
+			this.Tag(tagName, args);
 
 			return true;
 		}
@@ -115,11 +101,11 @@ namespace MyDynamicXmlBuilder
 
 			XElement element = new XElement(tagName);
 
-			current.Add(element);
+			this.current.Add(element);
 
 			if (fragment != null)
 			{
-				current = element;
+				this.current = element;
 			}
 
 			if (!string.IsNullOrEmpty(content))
@@ -150,7 +136,7 @@ namespace MyDynamicXmlBuilder
 			if (fragment != null)
 			{
 				fragment();
-				current = element.Parent;
+				this.current = element.Parent;
 			}
 		}
 
@@ -161,7 +147,7 @@ namespace MyDynamicXmlBuilder
 				throw new ArgumentNullException("comment");
 			}
 
-			current.Add(new XComment(comment));
+			this.current.Add(new XComment(comment));
 		}
 
         public void Declaration()
@@ -169,10 +155,10 @@ namespace MyDynamicXmlBuilder
             root.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         }
 
-		public static implicit operator string(XmlBuilder xml)
+		/*public static implicit operator string(XmlBuilder xml)
 		{
 			return xml.ToString();
-		}
+		}*/
 		
 		public override string ToString()
 		{
@@ -191,7 +177,8 @@ namespace MyDynamicXmlBuilder
 				Encoding = encoding,
 				Indent = true,
 				CloseOutput = true,
-				OmitXmlDeclaration = root.Declaration == null
+				OmitXmlDeclaration = false //root.Declaration == null -> todo
+                //WriteEndDocumentOnClose = false
 			});
 
 			root.Save(xmlWriter);
