@@ -17,12 +17,13 @@ namespace MyDynamicXmlBuilder
 	/// </copyright>
 	public sealed class XmlBuilder : DynamicObject
 	{
-		private static XDocument root = new XDocument();
-		private XContainer current;
-        
-		public XmlBuilder()
+        private XDocument parent;
+        private XContainer children;
+
+        internal XmlBuilder()
 		{
-			this.current = root;
+            this.parent = new XDocument();
+            this.children = parent;
 		}
 
         public static Action Section(Action fragmentBuilder)
@@ -45,7 +46,7 @@ namespace MyDynamicXmlBuilder
 			return fragmentBuilder;
 		}
 
-		public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
 		{
 			result = null;
 
@@ -79,7 +80,6 @@ namespace MyDynamicXmlBuilder
 				    if (arg is Action)
 				    {
 					    fragment = arg as Action;
-
 				    }
 				    else if (arg is Action<dynamic>)
 				    {
@@ -101,11 +101,11 @@ namespace MyDynamicXmlBuilder
 
 			XElement element = new XElement(tagName);
 
-			this.current.Add(element);
+			this.children.Add(element);
 
 			if (fragment != null)
 			{
-				this.current = element;
+				this.children = element;
 			}
 
 			if (!string.IsNullOrEmpty(content))
@@ -136,7 +136,7 @@ namespace MyDynamicXmlBuilder
 			if (fragment != null)
 			{
 				fragment();
-				this.current = element.Parent;
+				this.children = element.Parent;
 			}
 		}
 
@@ -147,25 +147,25 @@ namespace MyDynamicXmlBuilder
 				throw new ArgumentNullException("comment");
 			}
 
-			this.current.Add(new XComment(comment));
+			this.children.Add(new XComment(comment));
 		}
 
         public void Declaration()
         {
-            root.Declaration = new XDeclaration("1.0", "utf-8", "yes");
+            this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         }
 
-		/*public static implicit operator string(XmlBuilder xml)
+		public static implicit operator string(XmlBuilder xml)
 		{
 			return xml.ToString();
-		}*/
+		}
 		
 		public override string ToString()
 		{
 			Encoding encoding = new UTF8Encoding(false);
 
-			if (root.Declaration != null && !string.IsNullOrEmpty(root.Declaration.Encoding) &&
-				root.Declaration.Encoding.ToLowerInvariant() == "utf-16")
+			if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
+				this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
 			{
 				encoding = new UnicodeEncoding(false, false);
 			}
@@ -177,11 +177,17 @@ namespace MyDynamicXmlBuilder
 				Encoding = encoding,
 				Indent = true,
 				CloseOutput = true,
-				OmitXmlDeclaration = false //root.Declaration == null -> todo
-                //WriteEndDocumentOnClose = false
+				OmitXmlDeclaration = false, //root.Declaration == null -> todo
+                WriteEndDocumentOnClose = true,
+                Async = true,
+                CheckCharacters = true,
+                //IndentChars = " Tab ",
+                ConformanceLevel = ConformanceLevel.Document,
+                NamespaceHandling = NamespaceHandling.Default,
+                DoNotEscapeUriAttributes = false
 			});
 
-			root.Save(xmlWriter);
+			this.parent.Save(xmlWriter);
 
 			xmlWriter.Flush();
 			xmlWriter.Close();
