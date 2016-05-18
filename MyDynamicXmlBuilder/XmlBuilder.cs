@@ -9,11 +9,11 @@ using System.Text;
 namespace MyDynamicXmlBuilder
 {
 	/// <summary>
-	/// Dynamic XML construction API for .NET
+	///     Dynamic XML construction API for .NET
 	/// </summary>
 	///
 	/// <copyright>
-	/// (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
+	///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
 	/// </copyright>
 	public sealed class XmlBuilder : DynamicObject
 	{
