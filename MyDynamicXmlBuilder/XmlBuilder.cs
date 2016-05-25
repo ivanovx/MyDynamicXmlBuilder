@@ -17,7 +17,7 @@ namespace MyDynamicXmlBuilder
 	///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
 	/// </copyright>
     
-    [Serializable]
+    //[Serializable]
 	public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;

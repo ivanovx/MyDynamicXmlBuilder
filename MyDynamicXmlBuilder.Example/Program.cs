@@ -28,7 +28,7 @@ namespace MyDynamicXmlBuilder.Example
                 }));
 
                 Console.WriteLine(xml);
-            }            
-		}
+            }           
+        }
 	}
 }
