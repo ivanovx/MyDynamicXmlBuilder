@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Linq;
-using System.Xml.Linq;
 using System.Dynamic;
 using System.IO;
 using System.Xml;
+using System.Linq;
+using System.Xml.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 namespace MyDynamicXmlBuilder
 {
@@ -15,12 +16,17 @@ namespace MyDynamicXmlBuilder
 	/// <copyright>
 	///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
 	/// </copyright>
-	public sealed class XmlBuilder : DynamicObject
-	{
+    
+    [Serializable]
+	public class XmlBuilder : DynamicObject, IDisposable
+    {
         private XDocument parent;
         private XContainer children;
 
-        internal XmlBuilder()
+        // Todo
+        protected bool disposed = false;
+
+        public XmlBuilder()
 		{
             this.parent = new XDocument();
             this.children = parent;
@@ -164,11 +170,11 @@ namespace MyDynamicXmlBuilder
 		{
 			Encoding encoding = new UTF8Encoding(false);
 
-			if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
+			/*if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
 				this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
 			{
 				encoding = new UnicodeEncoding(false, false);
-			}
+			}*/
 
 			MemoryStream memoryStream = new MemoryStream();
 
@@ -205,6 +211,36 @@ namespace MyDynamicXmlBuilder
         public static dynamic Create()
         {
             return new XmlBuilder();
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            //GC.SuppressFinalize(this);
+        }
+
+        // Todo
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+                return;
+
+            if (disposing)
+            {
+                //handle.Dispose();
+                Console.WriteLine("disponse");
+                // Free any other managed objects here.
+                //
+            }
+
+            // Free any unmanaged objects here.
+            //
+            this.disposed = true;
+        }
+
+        ~XmlBuilder()
+        {
+            this.Dispose(false);
         }
     }
 }
