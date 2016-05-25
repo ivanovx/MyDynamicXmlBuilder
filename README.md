@@ -3,10 +3,8 @@
 ## Install
 
 ```powershell
-Install-Package MyDynamicXmlBuilder
+Install-Package MyDynamicXmlBuilder -Pre
 ```
-
---
 
 ## Basic demo
 ```cs
@@ -23,8 +21,6 @@ using (var xml = XmlBuilder.Create())
     Console.WriteLine(xml);
 }  
 ```
-
---
 
 ## Another demo
 

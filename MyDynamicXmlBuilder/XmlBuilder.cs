@@ -5,7 +5,6 @@ using System.Xml;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
-using System.Collections.Generic;
 
 namespace MyDynamicXmlBuilder
 {
@@ -17,13 +16,10 @@ namespace MyDynamicXmlBuilder
 	///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
 	/// </copyright>
     
-    //[Serializable]
 	public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;
         private XContainer children;
-
-        // Todo
         protected bool disposed = false;
 
         public XmlBuilder()
@@ -178,25 +174,27 @@ namespace MyDynamicXmlBuilder
 
 			MemoryStream memoryStream = new MemoryStream();
 
-			XmlWriter xmlWriter = XmlWriter.Create(memoryStream, new XmlWriterSettings
-			{
-				Encoding = encoding,
-				Indent = true,
-				CloseOutput = true,
-				OmitXmlDeclaration = false, //root.Declaration == null -> todo
+            XmlWriterSettings writerSettings = new XmlWriterSettings()
+            {
+                Encoding = encoding,
+                Indent = true,
+                CloseOutput = true,
+                OmitXmlDeclaration = false, //root.Declaration == null -> todo
                 WriteEndDocumentOnClose = true,
                 Async = true,
                 CheckCharacters = true,
-                //IndentChars = " Tab ",
                 ConformanceLevel = ConformanceLevel.Document,
                 NamespaceHandling = NamespaceHandling.Default,
                 DoNotEscapeUriAttributes = false
-			});
+            };
 
-			this.parent.Save(xmlWriter);
+            using (XmlWriter xmlWriter = XmlWriter.Create(memoryStream, writerSettings))
+            {
+                this.parent.Save(xmlWriter);
 
-			xmlWriter.Flush();
-			xmlWriter.Close();
+                xmlWriter.Flush();
+                xmlWriter.Close();
+            };
 
 			if (encoding is UnicodeEncoding)
 			{
@@ -216,7 +214,6 @@ namespace MyDynamicXmlBuilder
         public void Dispose()
         {
             this.Dispose(true);
-            //GC.SuppressFinalize(this);
         }
 
         // Todo
@@ -230,17 +227,10 @@ namespace MyDynamicXmlBuilder
                 //handle.Dispose();
                 Console.WriteLine("disponse");
                 // Free any other managed objects here.
-                //
             }
 
             // Free any unmanaged objects here.
-            //
             this.disposed = true;
-        }
-
-        ~XmlBuilder()
-        {
-            this.Dispose(false);
         }
     }
 }
