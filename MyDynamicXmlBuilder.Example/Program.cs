@@ -17,7 +17,7 @@ namespace MyDynamicXmlBuilder.Example
                     users.Comment("Users");
                     users.User(new { Id = 1 }, XmlBuilder.Section(user => {
                         user.Comment("User");
-                        user._FirstName("Kiro");
+                        user.FirstName("Kiro");
                         user.LastName("Zlatnia");
                         user.UserName("zlatnia");
                         user.Age(50);

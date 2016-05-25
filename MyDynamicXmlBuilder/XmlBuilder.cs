@@ -8,18 +8,20 @@ using System.Text;
 
 namespace MyDynamicXmlBuilder
 {
-	/// <summary>
-	///     Dynamic XML construction API for .NET
-	/// </summary>
-	///
-	/// <copyright>
-	///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
-	/// </copyright>
-    
-	public class XmlBuilder : DynamicObject, IDisposable
+    /// <summary>
+    ///     Dynamic XML construction API for .NET
+    /// </summary>
+    ///
+    /// <copyright>
+    ///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
+    /// </copyright>
+    /// 
+    /// <seealso cref="http://xmlbuilder.csyntax.net"/>
+    public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;
         private XContainer children;
+
         protected bool disposed = false;
 
         public XmlBuilder()
@@ -220,16 +222,17 @@ namespace MyDynamicXmlBuilder
         protected virtual void Dispose(bool disposing)
         {
             if (this.disposed)
+            {
                 return;
+            }                
 
             if (disposing)
             {
-                //handle.Dispose();
                 Console.WriteLine("disponse");
-                // Free any other managed objects here.
+
+                disposing = true;
             }
 
-            // Free any unmanaged objects here.
             this.disposed = true;
         }
     }
