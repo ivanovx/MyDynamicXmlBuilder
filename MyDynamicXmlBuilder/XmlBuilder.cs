@@ -5,6 +5,7 @@ using System.Xml;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace MyDynamicXmlBuilder
 {
@@ -159,29 +160,18 @@ namespace MyDynamicXmlBuilder
             this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         }
 
-		public static implicit operator string(XmlBuilder xml)
-		{
-			return xml.ToString();
-		}
-		
-		public override string ToString()
-		{
-			Encoding encoding = new UTF8Encoding(false);
+        public string Build()
+        {
+            Encoding encoding = new UTF8Encoding(false);
 
-			/*if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
-				this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
-			{
-				encoding = new UnicodeEncoding(false, false);
-			}*/
-
-			MemoryStream memoryStream = new MemoryStream();
+            MemoryStream memoryStream = new MemoryStream();
 
             XmlWriterSettings writerSettings = new XmlWriterSettings()
             {
                 Encoding = encoding,
                 Indent = true,
                 CloseOutput = true,
-                OmitXmlDeclaration = false, //root.Declaration == null -> todo
+                OmitXmlDeclaration = false,
                 WriteEndDocumentOnClose = true,
                 Async = true,
                 CheckCharacters = true,
@@ -198,15 +188,31 @@ namespace MyDynamicXmlBuilder
                 xmlWriter.Close();
             };
 
-			if (encoding is UnicodeEncoding)
+            if (encoding is UnicodeEncoding)
+            {
+                return Encoding.Unicode.GetString(memoryStream.ToArray());
+            }
+            else
+            {
+                return Encoding.UTF8.GetString(memoryStream.ToArray());
+            }
+        }
+		
+		public override string ToString()
+		{
+            /*if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
+				this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
 			{
-				return Encoding.Unicode.GetString(memoryStream.ToArray());
-			}
-			else
-			{
-				return Encoding.UTF8.GetString(memoryStream.ToArray());
-			}
+				encoding = new UnicodeEncoding(false, false);
+			}*/
+
+            return this.Build();
 		}
+
+        public static implicit operator string(XmlBuilder xml)
+        {
+            return xml.ToString();
+        }
 
         public static dynamic Create()
         {
@@ -218,7 +224,6 @@ namespace MyDynamicXmlBuilder
             this.Dispose(true);
         }
 
-        // Todo
         protected virtual void Dispose(bool disposing)
         {
             if (this.disposed)
@@ -229,8 +234,6 @@ namespace MyDynamicXmlBuilder
             if (disposing)
             {
                 Console.WriteLine("disponse");
-
-                disposing = true;
             }
 
             this.disposed = true;
