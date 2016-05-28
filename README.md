@@ -1,4 +1,5 @@
 # MyDynamicXmlBuilder
+Dynamic XML construction API for .NET
 
 ## Install
 
