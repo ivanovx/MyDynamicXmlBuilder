@@ -4,7 +4,7 @@ Dynamic XML construction API for .NET
 ## Install
 
 ```powershell
-Install-Package MyDynamicXmlBuilder -Pre
+Install-Package MyDynamicXmlBuilder
 ```
 
 ## Basic demo
@@ -48,3 +48,6 @@ using (var xml = XmlBuilder.Create())
 	Console.WriteLine(xml);
 }
 ```
+
+## For .NET Core
+[https://github.com/csyntax/MyDynamicXmlBuilder.DotNetCore] MyDynamicXmlBuilder for .NET Core

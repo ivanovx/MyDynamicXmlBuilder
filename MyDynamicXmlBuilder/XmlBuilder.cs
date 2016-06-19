@@ -5,7 +5,6 @@ using System.Xml;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace MyDynamicXmlBuilder
 {
@@ -18,6 +17,7 @@ namespace MyDynamicXmlBuilder
     /// </copyright>
     /// 
     /// <seealso cref="http://xmlbuilder.csyntax.net"/>
+    [Serializable]
     public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;
@@ -141,6 +141,7 @@ namespace MyDynamicXmlBuilder
 			if (fragment != null)
 			{
 				fragment();
+
 				this.children = element.Parent;
 			}
 		}
@@ -162,7 +163,13 @@ namespace MyDynamicXmlBuilder
 
         public string Build()
         {
-            Encoding encoding = new UTF8Encoding(false);
+            Encoding encoding = new UTF8Encoding(false); // Todo
+
+            if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
+                this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
+            {
+                encoding = new UnicodeEncoding(false, false);
+            }
 
             MemoryStream memoryStream = new MemoryStream();
 
@@ -200,12 +207,6 @@ namespace MyDynamicXmlBuilder
 		
 		public override string ToString()
 		{
-            /*if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
-				this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
-			{
-				encoding = new UnicodeEncoding(false, false);
-			}*/
-
             return this.Build();
 		}
 
@@ -219,7 +220,7 @@ namespace MyDynamicXmlBuilder
             return new XmlBuilder();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.Dispose(true);
         }
@@ -231,10 +232,10 @@ namespace MyDynamicXmlBuilder
                 return;
             }                
 
-            if (disposing)
+            /*if (disposing)
             {
                 Console.WriteLine("disponse");
-            }
+            }*/
 
             this.disposed = true;
         }
