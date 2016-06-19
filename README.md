@@ -50,4 +50,4 @@ using (var xml = XmlBuilder.Create())
 ```
 
 ## For .NET Core
-(https://github.com/csyntax/MyDynamicXmlBuilder.DotNetCore)[MyDynamicXmlBuilder for .NET Core]
+* [MyDynamicXmlBuilder for .NET Core](https://github.com/csyntax/MyDynamicXmlBuilder.DotNetCore)
