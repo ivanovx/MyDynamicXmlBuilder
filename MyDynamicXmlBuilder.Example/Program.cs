@@ -26,7 +26,9 @@ namespace MyDynamicXmlBuilder.Example
                     }));
                 }));
 
-                Console.WriteLine(xml);
+                var x = xml.GetDynamicMemberNames();
+
+                Console.WriteLine(x);
             }           
         }
 	}

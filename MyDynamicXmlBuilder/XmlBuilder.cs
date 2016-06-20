@@ -5,6 +5,8 @@ using System.Xml;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace MyDynamicXmlBuilder
 {
@@ -22,6 +24,7 @@ namespace MyDynamicXmlBuilder
     {
         private XDocument parent;
         private XContainer children;
+        private List<string> nodes = new List<string>();
 
         protected bool disposed = false;
 
@@ -61,6 +64,13 @@ namespace MyDynamicXmlBuilder
 
 			return true;
 		}
+
+        /*public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }*/
+
+       
 
         private void Tag(string tagName, params object[] args)
 		{
@@ -106,6 +116,8 @@ namespace MyDynamicXmlBuilder
 
 			XElement element = new XElement(tagName);
 
+            this.nodes.Add(tagName);
+
 			this.children.Add(element);
 
 			if (fragment != null)
@@ -145,6 +157,16 @@ namespace MyDynamicXmlBuilder
 				this.children = element.Parent;
 			}
 		}
+
+        public override IEnumerable<string> GetDynamicMemberNames()
+        {
+            foreach(var node in nodes)
+            {
+                Console.WriteLine(node);
+            }
+            return base.GetDynamicMemberNames();
+        }
+
 
         public void Comment(string comment)
 		{
@@ -230,12 +252,7 @@ namespace MyDynamicXmlBuilder
             if (this.disposed)
             {
                 return;
-            }                
-
-            /*if (disposing)
-            {
-                Console.WriteLine("disponse");
-            }*/
+            }
 
             this.disposed = true;
         }
