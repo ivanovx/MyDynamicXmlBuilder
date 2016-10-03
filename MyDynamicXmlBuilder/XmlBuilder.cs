@@ -16,7 +16,7 @@ namespace MyDynamicXmlBuilder
     ///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
     /// </copyright>
     /// 
-    /// <seealso cref="http://xmlbuilder.csyntax.net"/>
+    /// <seealso cref="http://mydynamicxmlbuilder.csyntax.net"/>
     [Serializable]
     public class XmlBuilder : DynamicObject, IDisposable
     {
@@ -226,7 +226,6 @@ namespace MyDynamicXmlBuilder
 
         protected virtual void Dispose(bool disposing)
         {
-
             this.disposed = true;
         }
     }
