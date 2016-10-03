@@ -17,7 +17,6 @@ namespace MyDynamicXmlBuilder
     /// </copyright>
     /// 
     /// <seealso cref="http://mydynamicxmlbuilder.csyntax.net"/>
-    [Serializable]
     public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;
@@ -192,7 +191,7 @@ namespace MyDynamicXmlBuilder
 
                 xmlWriter.Flush();
                 xmlWriter.Close();
-            };
+            }
 
             if (encoding is UnicodeEncoding)
             {
