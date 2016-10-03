@@ -13,7 +13,8 @@ using (var xml = XmlBuilder.Create())
 {
 	xml.Declaration();
 
-    xml.user("Kiro Zlatniq", new {
+    xml.user("Kiro Zlatniq", new 
+	{
         Id = 1,
         UserName = "kiro",
         Age = 50,
@@ -32,9 +33,11 @@ using (var xml = XmlBuilder.Create())
 
     xml.Comment("Someone comment");
 
-    xml.Users(XmlBuilder.Section(users => {
+    xml.Users(XmlBuilder.Section(users => 
+	{
         users.Comment("Users");
-        users.User(new { Id = 1 }, XmlBuilder.Section(user => {
+        users.User(new { Id = 1 }, XmlBuilder.Section(user => 
+		{
             user.Comment("User");
             user.FirstName("Kiro");
             user.LastName("Zlatnia");
@@ -48,6 +51,3 @@ using (var xml = XmlBuilder.Create())
 	Console.WriteLine(xml);
 }
 ```
-
-## For .NET Core
-* [MyDynamicXmlBuilder for .NET Core](https://github.com/csyntax/MyDynamicXmlBuilder.DotNetCore)
