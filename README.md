@@ -1,11 +1,23 @@
 # MyDynamicXmlBuilder
 Dynamic XML construction API for .NET
 
+#Migartion
+* Migartion started, we are ported MyDynamicXmlBuilder on .NET Framework, .NET Core and Xamarin.
+* Like use the style for development and like new name 'DynamicXmlBuilder'
+* Cross-Platform, like porting on .NET Core and Xamarin
+* Support the Windows, Linux, Mac, Win 10, iOS, Android
+
 ## Install
 
 ```powershell
 Install-Package MyDynamicXmlBuilder
 ```
+
+```powershell
+Install-Package DynamicXmlBuilder -Pre
+```
+
+* If prefer to use MyDynamicXmlBuilder, works on Win only
 
 ## Basic demo
 ```cs
