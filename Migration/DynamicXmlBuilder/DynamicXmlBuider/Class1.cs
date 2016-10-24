@@ -14,9 +14,6 @@ namespace DynamicXmlBuider
     {
         private XDocument parent;
         private XContainer children;
-        private bool disposed;
-
-        //protected bool disposed = false;
 
         public XmlBuilder()
         {
@@ -199,25 +196,13 @@ namespace DynamicXmlBuider
             }
         }
 
-        public static implicit operator string(XmlBuilder xml)
-        {
-            return xml.ToString();
-        }
+        public static implicit operator string(XmlBuilder xml) => xml.ToString();
 
-        [STAThread]
-        public static dynamic Create()
-        {
-            return new XmlBuilder();
-        }
+        public static dynamic Create() => new XmlBuilder();
 
         public virtual void Dispose()
         {
-            this.Dispose(true);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            this.disposed = true;
+            
         }
     }
 }
