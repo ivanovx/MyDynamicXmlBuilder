@@ -186,14 +186,16 @@ namespace DynamicXmlBuider
                 xmlWriter.Close();
             }
 
-            if (encoding is UnicodeEncoding)
+            /*if (encoding is UnicodeEncoding)
             {
                 return Encoding.Unicode.GetString(memoryStream.ToArray());
             }
             else
             {
                 return Encoding.UTF8.GetString(memoryStream.ToArray());
-            }
+            }*/
+
+            return Encoding.Unicode.GetString(memoryStream.ToArray());
         }
 
         public static implicit operator string(XmlBuilder xml) => xml.ToString();

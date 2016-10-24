@@ -29,6 +29,8 @@ namespace Example
                 }));
 
                 Console.WriteLine(xml);
+
+                Console.ReadKey();
             }
         }
     }
