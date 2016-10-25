@@ -1,21 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
 namespace DynamicXmlBuider
 {
-    public class XmlBuilder : DynamicObject, IDisposable
+    public class XmlBuilder : DynamicObject, IXmlBuilder
     {
         private XDocument parent;
         private XContainer children;
 
-        public XmlBuilder()
+        internal XmlBuilder()
         {
             this.parent = new XDocument();
             this.children = parent;
@@ -146,10 +146,7 @@ namespace DynamicXmlBuider
             this.children.Add(new XComment(comment));
         }
 
-        public void Declaration()
-        {
-            this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
-        }
+        public void Declaration() => this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
 
         [MTAThread]
         public override string ToString()

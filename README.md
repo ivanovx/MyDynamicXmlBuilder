@@ -6,6 +6,7 @@ Dynamic XML construction API for .NET
 * Like use the style for development and like new name 'DynamicXmlBuilder'
 * Cross-Platform, like porting on .NET Core and Xamarin
 * Support the Windows, Linux, Mac, Win 10, iOS, Android
+* Like C# 6.0 style and functional programming
 
 ## Install
 

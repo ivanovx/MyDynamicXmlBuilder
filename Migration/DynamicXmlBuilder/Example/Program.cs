@@ -3,9 +3,9 @@ using DynamicXmlBuider;
 
 namespace Example
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        internal static void Main(string[] args)
         {
             using (var xml = XmlBuilder.Create())
             {
@@ -29,8 +29,6 @@ namespace Example
                 }));
 
                 Console.WriteLine(xml);
-
-                Console.ReadKey();
             }
         }
     }
