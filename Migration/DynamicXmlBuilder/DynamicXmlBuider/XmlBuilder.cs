@@ -10,9 +10,10 @@ using System.Xml.Linq;
 
 namespace DynamicXmlBuider
 {
+    [Serializable]
     public class XmlBuilder : DynamicObject, IXmlBuilder
     {
-        private XDocument parent;
+        private readonly XDocument parent;
         private XContainer children;
 
         internal XmlBuilder()
@@ -25,7 +26,7 @@ namespace DynamicXmlBuider
         {
             if (fragmentBuilder == null)
             {
-                throw new ArgumentNullException("fragmentBuilder");
+                throw new ArgumentNullException(nameof(fragmentBuilder));
             }
 
             return fragmentBuilder;
@@ -35,7 +36,7 @@ namespace DynamicXmlBuider
         {
             if (fragmentBuilder == null)
             {
-                throw new ArgumentNullException("fragmentBuilder");
+                throw new ArgumentNullException(nameof(fragmentBuilder));
             }
 
             return fragmentBuilder;
@@ -56,7 +57,7 @@ namespace DynamicXmlBuider
         {
             if (string.IsNullOrEmpty(tagName))
             {
-                throw new ArgumentNullException("tagName");
+                throw new ArgumentNullException(nameof(tagName));
             }
 
             if (tagName.IndexOf('_') == 0)
@@ -97,7 +98,7 @@ namespace DynamicXmlBuider
             XElement element = new XElement(tagName);
 
             this.children.Add(element);
-
+       
             if (fragment != null)
             {
                 this.children = element;
@@ -140,7 +141,7 @@ namespace DynamicXmlBuider
         {
             if (string.IsNullOrEmpty(comment))
             {
-                throw new ArgumentNullException("comment");
+                throw new ArgumentNullException(nameof(comment));
             }
 
             this.children.Add(new XComment(comment));
@@ -183,16 +184,16 @@ namespace DynamicXmlBuider
                 xmlWriter.Close();
             }
 
-            /*if (encoding is UnicodeEncoding)
+            if (encoding is UnicodeEncoding)
             {
                 return Encoding.Unicode.GetString(memoryStream.ToArray());
             }
             else
             {
                 return Encoding.UTF8.GetString(memoryStream.ToArray());
-            }*/
+            }
 
-            return Encoding.Unicode.GetString(memoryStream.ToArray());
+            //return Encoding.Unicode.GetString(memoryStream.ToArray());
         }
 
         public static implicit operator string(XmlBuilder xml) => xml.ToString();
@@ -201,7 +202,8 @@ namespace DynamicXmlBuider
 
         public virtual void Dispose()
         {
-            
+           
+
         }
     }
 }
