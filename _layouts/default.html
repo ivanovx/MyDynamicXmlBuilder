@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="bg">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="autor" content="Иван Иванов" />
+		<meta name="reply-to" content="csyntax@outlook.com" />
+		<meta name="generator" content="Jekyll v{{ jekyll.version }}" />
+		<meta name="description" content="Официалният сайт и портфолио на Иван Иванов"/>
+
+		<title>
+			{{ page.title }} - {{site.description}}
+		</title>
+
+		<link rel="stylesheet" href="/css/csyntax.css" />
+		<link rel="stylesheet" href="/css/prism.css" />
+
+		<!--<link rel="apple-touch-icon" href="/images/pentagram/pentagram.png" />
+		<link rel="icon" href="/images/pentagram/pentagram.png" />-->
+
+		<script src="/js/prism.js"></script>
+	</head>
+	<body>
+		{% include header.html %}
+		{{ content }}
+		{% include footer.html %}
+	</body>
+</html>
