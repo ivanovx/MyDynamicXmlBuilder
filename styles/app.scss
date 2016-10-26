@@ -44,7 +44,7 @@ body {
 }
 
 [role="banner"] {
-    background: #e1fbff;
+    background: rgb(246, 232, 231);;
     padding-top: .5em;
     position: relative;
 
@@ -53,7 +53,7 @@ body {
         margin: 0 auto;
         position: relative;
         content: "";
-        background: #185d8c;
+        background: rgb(254, 26, 2);
         width: 99%;
         height: 3px;
         left: 2px;
@@ -62,18 +62,18 @@ body {
     }
 
     .logo {
-        img {
+        svg {
             display: block;
             margin: 0 auto;
-            max-width: 755px;
+            max-width: 100%;
             width: 98%;
         }
     }
 
-    .version {
+    /*.version {
         position: relative;
         margin: 0 auto;
-        max-width: 748px;
+        max-width: px;
         width: 98%;
         bottom: 1.1em;
         font-size: .8rem;
@@ -83,7 +83,7 @@ body {
             color: #214254;
             text-decoration: none;
         }
-    }
+    }*/
 }
 
 
@@ -99,17 +99,18 @@ body {
         display: block;
         font-size: 1.2rem;
         padding: 0 0 .2em .25em;
+        color: rgb(254, 26, 2);
     }
 
     .install-container {
-        background: #214254;
+        background: rgb(254, 26, 2);
         position: relative;
 
         &::after {
             -webkit-animation: cursor-blink .8s infinite;
             animation: cursor-blink .8s infinite;
-            background: #e1fbff;
-            border: 1px solid #e1fbff;
+            /*background: rgb(254, 26, 2);*/
+            border: 1px solid white;
             content: "";
             display: block;
             height: 47%;
@@ -123,7 +124,7 @@ body {
             background: transparent;
             border: 0;
             box-sizing: border-box;
-            color: #e1fbff;
+            color: white;
             cursor: text;
             display: block;
             font-size: .9rem;
