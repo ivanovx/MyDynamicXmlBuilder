@@ -1,29 +1,53 @@
 <!doctype html>
-<html lang="bg">
+<html>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="autor" content="Иван Иванов" />
-		<meta name="reply-to" content="csyntax@outlook.com" />
-		<meta name="generator" content="Jekyll v{{ jekyll.version }}" />
-		<meta name="description" content="Официалният сайт и портфолио на Иван Иванов"/>
+		
 
-		<title>
-			{{ page.title }} - {{site.description}}
-		</title>
+		<title>{{ page.title }} | {{site.description}}</title>
 
 		<link rel="stylesheet" href="/css/csyntax.css" />
 		<link rel="stylesheet" href="/css/prism.css" />
-
-		<!--<link rel="apple-touch-icon" href="/images/pentagram/pentagram.png" />
-		<link rel="icon" href="/images/pentagram/pentagram.png" />-->
-
-		<script src="/js/prism.js"></script>
+		
+		<link rel="stylesheet" href="/styles/app.css" />
 	</head>
 	<body>
-		{% include header.html %}
-		{{ content }}
-		{% include footer.html %}
+		<header role="banner">
+			<div class="logo">
+				<img src="images/logo.svg" alt="MyDynamicXmlBuilder Logo">
+			</div>      
+			<p class="version">
+				<a href="https://www.nuget.org/packages/MyDynamicXmlBuilder">version 1.0.0-preview</a>
+			</p>
+			<div class="install">
+				<label for="install-input">Install it with NuGet:</label>
+				<div class="install-container">
+					<input type="text" id="install-input" readonly value="Install-Package DynamicXmlBuilder -Pre">
+				</div>
+			</div>
+		</header>
+
+		<div role="main">
+			{{content}}
+		</div>
+
+		<footer role="contentinfo">
+			<ul class="site-info">
+				<li>
+					<div>About</div>
+					<a href="/about">About</a> 
+				</li>
+				<li>
+					<div>Source</div>
+					<a href="https://github.com/csyntax/MyDynamicXmlBuilder">Github</a>
+				</li>
+				<li>
+					<div>Made by</div>
+					<a href="http://www.csyntax.net">Ivan Ivanov</a>
+				</li>
+			</ul>
+		</footer>
 	</body>
 </html>
