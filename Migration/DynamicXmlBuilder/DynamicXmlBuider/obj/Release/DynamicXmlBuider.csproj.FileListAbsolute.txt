@@ -1,4 +1,0 @@
-C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\bin\Release\DynamicXmlBuider.dll
-C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\bin\Release\DynamicXmlBuider.pdb
-C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\obj\Release\DynamicXmlBuider.dll
-C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\obj\Release\DynamicXmlBuider.pdb
