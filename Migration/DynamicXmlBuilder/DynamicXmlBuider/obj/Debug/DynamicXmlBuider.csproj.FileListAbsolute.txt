@@ -1,0 +1,5 @@
+C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\bin\Debug\DynamicXmlBuider.dll
+C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\bin\Debug\DynamicXmlBuider.pdb
+C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\obj\Debug\DynamicXmlBuider.csprojResolveAssemblyReference.cache
+C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\obj\Debug\DynamicXmlBuider.dll
+C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\Migration\DynamicXmlBuilder\DynamicXmlBuider\obj\Debug\DynamicXmlBuider.pdb
