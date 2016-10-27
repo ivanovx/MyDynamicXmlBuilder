@@ -6,6 +6,10 @@ Dynamic XML construction API for .NET
 Install-Package DynamicXmlBuilder -Pre
 ```
 
+```cs
+using DynamicXmlBuilder;
+```
+
 ## Basic demo
 ```cs
 using (var xml = XmlBuilder.Create())
