@@ -1,2 +1,0 @@
-C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\src\Example\bin\Debug\Example.exe.config
-C:\Users\csyntax\Desktop\MyDynamicXmlBuilder\src\Example\obj\Debug\Example.csprojResolveAssemblyReference.cache
