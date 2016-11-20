@@ -13,15 +13,15 @@ namespace MyDynamicXmlBuilder
     /// </summary>
     ///
     /// <copyright>
-    ///     (c) Ivan Ivanov, 2015 - 2016 - http://www.csyntax.net
+    ///     (c) Ivan Ivanov, 2015 - 2017 - http://www.csyntax.net
     /// </copyright>
     /// 
-    /// <seealso cref="http://mydynamicxmlbuilder.csyntax.net"/>
+    /// <seealso cref="http://xmlbuilder.csyntax.net"/>
     public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;
         private XContainer children;
-        protected bool disposed = false;
+        private bool disposed = false;
 
         public XmlBuilder()
 		{
