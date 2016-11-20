@@ -1,13 +1,13 @@
-# DynamicXmlBuilder
+# MyDynamicXmlBuilder
 Dynamic XML construction API for .NET
 
 ## Install
 ```powershell
-Install-Package DynamicXmlBuilder -Pre
+Install-Package MyDynamicXmlBuilder
 ```
 
 ```cs
-using DynamicXmlBuilder;
+using MyDynamicXmlBuilder;
 ```
 
 ## Basic demo
