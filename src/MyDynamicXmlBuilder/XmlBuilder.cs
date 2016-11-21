@@ -33,7 +33,7 @@ namespace MyDynamicXmlBuilder
 		{
 			if (fragmentBuilder == null)
 			{
-				throw new ArgumentNullException("fragmentBuilder");
+				throw new ArgumentNullException(nameof(fragmentBuilder));
 			}
 
 			return fragmentBuilder;
@@ -43,7 +43,7 @@ namespace MyDynamicXmlBuilder
 		{
 			if (fragmentBuilder == null)
 			{
-				throw new ArgumentNullException("fragmentBuilder");
+				throw new ArgumentNullException(nameof(fragmentBuilder));
 			}
 
 			return fragmentBuilder;
@@ -64,7 +64,7 @@ namespace MyDynamicXmlBuilder
 		{
 			if (string.IsNullOrEmpty(tagName))
 			{
-				throw new ArgumentNullException("tagName");
+				throw new ArgumentNullException(nameof(tagName));
 			}
 
 			if (tagName.IndexOf('_') == 0)
@@ -148,7 +148,7 @@ namespace MyDynamicXmlBuilder
 		{
             if (string.IsNullOrEmpty(comment))
 			{
-				throw new ArgumentNullException("comment");
+				throw new ArgumentNullException(nameof(comment));
 			}
 
 			this.children.Add(new XComment(comment));
@@ -159,11 +159,12 @@ namespace MyDynamicXmlBuilder
             this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         }
 
-        public string Build()
+        private string Build()
         {
-            Encoding encoding = new UTF8Encoding(false); // Todo
+            Encoding encoding = new UTF8Encoding(false);
 
-            if (this.parent.Declaration != null && !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
+            if (this.parent.Declaration != null && 
+                !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
                 this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
             {
                 encoding = new UnicodeEncoding(false, false);
