@@ -1,5 +1,7 @@
 # MyDynamicXmlBuilder
-Dynamic XML construction API for .NET
+> Dynamic XML construction API for .NET
+
+[![NuGet version](https://badge.fury.io/nu/MyDynamicXmlBuilder.svg)](https://badge.fury.io/nu/MyDynamicXmlBuilder)
 
 ## Install
 ```powershell
