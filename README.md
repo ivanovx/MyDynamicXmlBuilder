@@ -12,7 +12,7 @@ Install-Package MyDynamicXmlBuilder
 using MyDynamicXmlBuilder;
 ```
 
-## Basic demo
+## Demos
 ```cs
 using (var xml = XmlBuilder.Create())
 {
@@ -28,9 +28,7 @@ using (var xml = XmlBuilder.Create())
     Console.WriteLine(xml);
 }  
 ```
-
-## Another demo
-
+----
 ````cs
 using (var xml = XmlBuilder.Create())
 {
