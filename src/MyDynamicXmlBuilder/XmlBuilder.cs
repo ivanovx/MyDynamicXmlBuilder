@@ -23,7 +23,7 @@ namespace MyDynamicXmlBuilder
         private XContainer children;
         private bool disposed = false;
 
-        public XmlBuilder()
+        private XmlBuilder()
 		{
             this.parent = new XDocument();
             this.children = parent;
@@ -79,7 +79,8 @@ namespace MyDynamicXmlBuilder
 
 			args
                 .ToList()
-                .ForEach(arg => {
+                .ForEach(arg => 
+                {
 				    if (arg is Action)
 				    {
 					    fragment = arg as Action;
@@ -159,7 +160,7 @@ namespace MyDynamicXmlBuilder
             this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
         }
 
-        private string Build()
+        public string Build()
         {
             Encoding encoding = new UTF8Encoding(false);
 
@@ -172,7 +173,7 @@ namespace MyDynamicXmlBuilder
 
             MemoryStream memoryStream = new MemoryStream();
 
-            XmlWriterSettings writerSettings = new XmlWriterSettings()
+            XmlWriterSettings writerSettings = new XmlWriterSettings
             {
                 Encoding = encoding,
                 Indent = true,
@@ -204,15 +205,15 @@ namespace MyDynamicXmlBuilder
             }
         }
 		
-		public override string ToString()
+		/*public override string ToString()
 		{
             return this.Build();
-		}
+		}*/
 
-        public static implicit operator string(XmlBuilder xml)
+        /*public static implicit operator string(XmlBuilder xml)
         {
             return xml.ToString();
-        }
+        }*/
 
         public static dynamic Create()
         {
