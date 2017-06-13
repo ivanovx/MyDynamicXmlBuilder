@@ -13,7 +13,7 @@ namespace MyDynamicXmlBuilder.Example
 
                 xml.Comment("Someone comment");
 
-                xml.Users(XmlBuilder.Section(users => 
+                xml.Users(new { @class="css bate" }, XmlBuilder.Section(users => 
                 {
                     users.Comment("Users");
                     users.User(new { Id = 1 }, XmlBuilder.Section(user => 

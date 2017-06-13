@@ -5,6 +5,7 @@ using System.Xml;
 using System.Linq;
 using System.Xml.Linq;
 using System.Text;
+using System.Threading;
 
 namespace MyDynamicXmlBuilder
 {
@@ -15,15 +16,28 @@ namespace MyDynamicXmlBuilder
     /// <copyright>
     ///     (c) Ivan Ivanov, 2015 - 2017 - http://www.csyntax.net
     /// </copyright>
-    /// 
-    /// <seealso cref="http://xmlbuilder.csyntax.net"/>
     public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;
         private XContainer children;
-        private bool disposed = false;
+        //private bool disposed = false;
 
-        private XmlBuilder()
+        private readonly object synchRoot = new object();
+
+        private const int DisposedFlag = 1;
+
+        private int _isDisposed;
+
+        protected bool IsDisposed
+        {
+            get
+            {
+                Interlocked.MemoryBarrier();
+                return this._isDisposed == 1;
+            }
+        }
+
+        public XmlBuilder()
 		{
             this.parent = new XDocument();
             this.children = parent;
@@ -222,12 +236,25 @@ namespace MyDynamicXmlBuilder
 
         public virtual void Dispose()
         {
+            if (Interlocked.Exchange(ref this._isDisposed, 1) == 1)
+            {
+                return;
+            }
+
             this.Dispose(true);
+
+            GC.SuppressFinalize(this);
         }
 
         protected virtual void Dispose(bool disposing)
         {
-            this.disposed = true;
+            if (disposing)
+            {
+                lock (synchRoot)
+                {
+                    // Todo implements this
+                }
+            }
         }
     }
 }
