@@ -1,52 +1,49 @@
-# [MyDynamicXmlBuilder](http://csyntax.github.io/MyDynamicXmlBuilder)
-> Dynamic XML construction API for .NET
+# MyDynamicXmlBuilder
 
 [![NuGet version](https://badge.fury.io/nu/MyDynamicXmlBuilder.svg)](https://badge.fury.io/nu/MyDynamicXmlBuilder)
 
-## Install
-```powershell
-Install-Package MyDynamicXmlBuilder
+[![Build status](https://ci.appveyor.com/api/projects/status/ilklj1gfluf4l0dp?svg=true)](https://ci.appveyor.com/project/IvanIvanov/mydynamicxmlbuilder)
+
+> Dynamic XML construction API for .NET
+
+## Requirements
+* .NET Framework 4.5.2
+
+## Installation
+- Install from Nuget `Install-Package MyDynamicXmlBuilder`
+
+## Examples!
+
+* Nodes
+
+```c#
+var xml = XmlBuilder.Create();
+
+xml.foo("bar");
+
+Console.WriteLine(xml.Build());
 ```
 
-## Demos
-```cs
-using (var xml = XmlBuilder.Create())
-{
-	xml.Declaration();
+* Attributes
 
-    xml.user("Kiro Zlatniq", new
-	{
-        Id = 1,
-        UserName = "kiro",
-        Age = 50,
-    });
+```c#
+var xml = XmlBuilder.Create();
 
-    Console.WriteLine(xml.Build());
-}  
+xml.user("Kiro", new { username = "zlatnia", age = 50 });
+
+Console.WriteLine(xml.Build());
 ```
-----
-````cs
-using (var xml = XmlBuilder.Create())
-{
-    xml.Declaration();
 
-    xml.Comment("Someone comment");
+* Nesting via delegates
 
-    xml.Users(XmlBuilder.Section(users =>
-	{
-        users.Comment("Users");
-        users.User(new { Id = 1 }, XmlBuilder.Section(user =>
-		{
-            user.Comment("User");
-            user.FirstName("Kiro");
-            user.LastName("Zlatnia");
-            user.UserName("zlatnia");
-            user.Age(50);
-            user.Email("kiro@zlatnia.bg");
-            user.Phone("089855533");
-        }));
-    }));
+```c#
+var xml = XmlBuilder.Create();
 
-	Console.WriteLine(xml.Build());
-}
+xml.user(XmlBuilder.Section(u => {
+    u.firstname("Kiro");
+    u.lastname("Kirilov");
+    u.username("jdoe@example.org");
+}));
+
+Console.WriteLine(xml.Build());
 ```
