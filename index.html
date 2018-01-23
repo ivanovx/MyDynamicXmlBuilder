@@ -3,10 +3,9 @@ layout: default
 title: Home
 ---
 
-
-    <ol class="instructions content--restricted-width">
-        <li class="instruction">
-            <pre><code class="highlight">
+<ol class="instructions content--restricted-width">
+    <li class="instruction">
+        <pre><code class="highlight">
 var xml = XmlBuilder.Create();
 
 xml.Declaration();
@@ -24,9 +23,9 @@ xml.Users(XmlBuilder.Section(users => {
         user.Phone("089855533");
     }));
 }));</code></pre>
-        </li>
-        <li class="instruction">
-            <pre><code class="highlight">
+    </li>
+    <li class="instruction">
+        <pre><code class="highlight">
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;yes&quot;?&gt;
 &lt;!--Someone comment--&gt;
 &lt;Users&gt;
@@ -40,5 +39,5 @@ xml.Users(XmlBuilder.Section(users => {
         &lt;Phone&gt;089855533&lt;/Phone&gt;
     &lt;/User&gt;
 &lt;/Users&gt;</code></pre>
-        </li>
-    </ol>
+    </li>
+ </ol>

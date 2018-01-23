@@ -24,23 +24,23 @@ body {
 
 .install-container input,
 .instructions code {
-    font-family: "Lucida Sans Typewriter", "monaco", "Consolas", "Lucida Console", monospace
+    font-family: "Lucida Sans Typewriter", "monaco", "Consolas", "Lucida Console", monospace;
 }
 
 body {
     background: #fff5f5;
     color: #214254;
-    font-family: "Nunito", arial, sans-serif
+    font-family: "Nunito", arial, sans-serif;
 }
 
 .content--restricted-width {
     margin: 0 auto;
     max-width: 1260px;
-    width: 95%
+    width: 95%;
 }
 
 .hidden {
-    visibility: hidden
+    visibility: hidden;
 }
 
 [role="banner"] {
@@ -58,7 +58,7 @@ body {
         height: 3px;
         left: 2px;
         top: -2px;
-        transform: rotate(-0.2deg)
+        transform: rotate(-0.2deg);
     }
 
     .logo {
@@ -85,7 +85,6 @@ body {
         }
     }*/
 }
-
 
 .install {
     box-sizing: border-box;
@@ -161,35 +160,35 @@ body {
 @media screen and (min-width:480px) {
     [role="banner"] .version {
         font-size: .8rem;
-        bottom: 2.4em
+        bottom: 2.4em;
     }
     [role="banner"] .install .install-container input {
-        font-size: 1.3rem
+        font-size: 1.3rem;
     }
     [role="banner"] .install .install-container::after {
-        height: 1.5rem
+        height: 1.5rem;
     }
 }
 
 @-webkit-keyframes cursor-blink {
     0%,
     40% {
-        background-color: #e1fbff
+        background-color: #e1fbff;
     }
     49%,
     100% {
-        background-color: rgba(225, 251, 255, 0)
+        background-color: rgba(225, 251, 255, 0);
     }
 }
 
 @keyframes cursor-blink {
     0%,
     40% {
-        background-color: #e1fbff
+        background-color: #e1fbff;
     }
     49%,
     100% {
-        background-color: rgba(225, 251, 255, 0)
+        background-color: rgba(225, 251, 255, 0);
     }
 }
 
@@ -231,7 +230,6 @@ body {
         padding-top: 2.4em;
     }
 }
-
 
 @media screen and (min-width:860px) {
     [role="main"] {
@@ -287,8 +285,6 @@ body {
 }
 
 
-
-
 [role="contentinfo"] {
     padding-bottom: 2rem;
     position: relative;
@@ -306,8 +302,6 @@ body {
         width: 99%;
     }
 }
-
-
 
 .site-info {
     list-style: none;
