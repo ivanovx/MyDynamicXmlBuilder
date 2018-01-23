@@ -14,6 +14,11 @@ body {
     padding: 0
 }
 
+::selection {
+    background:#ea4c89;
+    color: white;
+}
+
 @font-face {
     font-family: 'Nunito';
     font-style: normal;
