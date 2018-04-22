@@ -15,7 +15,7 @@ body {
 }
 
 ::selection {
-    background:#ea4c89;
+    background: rgb(244, 0, 0);
     color: white;
 }
 
@@ -225,6 +225,7 @@ body {
 
             &:first-of-type:first-letter {
                font-size: xx-large;
+                color: rgb(244, 0, 0);
             }
         }
     }
