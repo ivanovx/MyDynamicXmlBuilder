@@ -4,16 +4,15 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="description" content="Dynamic XML construction API for .NET maked by Ivan Ivanov.">
 
 		<title>{{ page.title }} | {{site.title}}</title>
 
-		<link rel="stylesheet" href="./styles/app.css" />
+		<link rel="stylesheet" href="/styles/app.css" />
 	</head>
 	<body>
 		<header role="banner">
-			<div class="logo">
-				{% include logo.svg %}
-			</div>
+			<div class="logo">{% include logo.svg %}</div>
 			<div class="install">
 				<label for="install-input">Install it with NuGet:</label>
 				<div class="install-container">
@@ -21,16 +20,14 @@
 				</div>
 			</div>
 		</header>
-
 		<div role="main">
 			{{content}}
 		</div>
-
 		<footer role="contentinfo">
 			<ul class="site-info">
 				<li>
 					<div>About</div>
-					<a href="./about">About</a>
+					<a href="/about">About</a>
 				</li>
 				<li>
 					<div>Source</div>
