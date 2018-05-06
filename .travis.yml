@@ -1,0 +1,5 @@
+language: csharp
+solution: MyDynamicXmlBuilder.sln
+install:
+  - nuget restore MyDynamicXmlBuilder.sln
+  - nuget install NUnit.Runners -OutputDirectory testrunner
