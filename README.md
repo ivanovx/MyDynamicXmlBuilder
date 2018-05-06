@@ -4,6 +4,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ilklj1gfluf4l0dp?svg=true)](https://ci.appveyor.com/project/IvanIvanov/mydynamicxmlbuilder)
 
+[![Build Status](https://travis-ci.org/csyntax/MyDynamicXmlBuilder.svg?branch=master)](https://travis-ci.org/csyntax/MyDynamicXmlBuilder)
+
 > Dynamic XML construction API for .NET
 
 ## Requirements
