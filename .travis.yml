@@ -1,7 +1,0 @@
-language: csharp
-solution: src/MyDynamicXmlBuilder.sln
-install:
-  - nuget restore src/MyDynamicXmlBuilder.sln
-  - nuget install NUnit.Runners -OutputDirectory testrunner
-script:
-  - xbuild  src/MyDynamicXmlBuilder.sln /p:TargetFrameworkVersion="v4.5" /p:Configuration=Stress

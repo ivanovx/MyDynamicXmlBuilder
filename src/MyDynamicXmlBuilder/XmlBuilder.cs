@@ -1,26 +1,26 @@
-﻿using System;
-using System.Dynamic;
-using System.IO;
-using System.Xml;
-using System.Linq;
-using System.Xml.Linq;
-using System.Text;
-using System.Threading;
-
-namespace MyDynamicXmlBuilder
+﻿namespace MyDynamicXmlBuilder
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Xml;
+    using System.Xml.Linq;
+    using System.Dynamic;
+    using System.Threading;
+
     /// <summary>
     ///     Dynamic XML construction API for .NET
     /// </summary>
     ///
     /// <copyright>
-    ///     (c) Ivan Ivanov, 2015 - 2017 - http://www.csyntax.net
+    ///     (c) Ivan Ivanov, 2015 - 2017 - http://xml.csyntax.net
     /// </copyright>
     public class XmlBuilder : DynamicObject, IDisposable
     {
         private XDocument parent;
         private XContainer children;
-        //private bool disposed = false;
+        private bool disposed = false;
 
         private readonly object synchRoot = new object();
 
@@ -33,6 +33,7 @@ namespace MyDynamicXmlBuilder
             get
             {
                 Interlocked.MemoryBarrier();
+
                 return this._isDisposed == 1;
             }
         }
@@ -185,8 +186,6 @@ namespace MyDynamicXmlBuilder
                 encoding = new UnicodeEncoding(false, false);
             }
 
-            MemoryStream memoryStream = new MemoryStream();
-
             XmlWriterSettings writerSettings = new XmlWriterSettings
             {
                 Encoding = encoding,
@@ -201,38 +200,32 @@ namespace MyDynamicXmlBuilder
                 DoNotEscapeUriAttributes = false
             };
 
-            using (XmlWriter xmlWriter = XmlWriter.Create(memoryStream, writerSettings))
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                this.parent.Save(xmlWriter);
+                using (XmlWriter xmlWriter = XmlWriter.Create(memoryStream, writerSettings))
+                {
+                    this.parent.Save(xmlWriter);
 
-                xmlWriter.Flush();
-                xmlWriter.Close();
-            }
+                    xmlWriter.Flush();
+                    xmlWriter.Close();
+                }
 
-            if (encoding is UnicodeEncoding)
-            {
-                return Encoding.Unicode.GetString(memoryStream.ToArray());
-            }
-            else
-            {
-                return Encoding.UTF8.GetString(memoryStream.ToArray());
+                if (encoding is UnicodeEncoding)
+                {
+                    return Encoding.Unicode.GetString(memoryStream.ToArray());
+                }
+                else
+                {
+                    return Encoding.UTF8.GetString(memoryStream.ToArray());
+                }
             }
         }
 		
-		/*public override string ToString()
-		{
-            return this.Build();
-		}*/
+		public override string ToString() => this.Build();
 
-        /*public static implicit operator string(XmlBuilder xml)
-        {
-            return xml.ToString();
-        }*/
+        public static implicit operator string(XmlBuilder xml) => xml.ToString();
 
-        public static dynamic Create()
-        {
-            return new XmlBuilder();
-        }
+        public static dynamic Create() => new XmlBuilder();
 
         public virtual void Dispose()
         {
@@ -252,7 +245,7 @@ namespace MyDynamicXmlBuilder
             {
                 lock (synchRoot)
                 {
-                    // Todo implements this
+                    this.disposed = true;
                 }
             }
         }

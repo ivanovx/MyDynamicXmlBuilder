@@ -1,8 +1,8 @@
-﻿using System;
-using MyDynamicXmlBuilder;
-
-namespace MyDynamicXmlBuilder.Example
+﻿namespace MyDynamicXmlBuilder.Example
 {
+    using System;
+    using MyDynamicXmlBuilder;
+
     internal class Program
 	{
 		internal static void Main(string[] args)
