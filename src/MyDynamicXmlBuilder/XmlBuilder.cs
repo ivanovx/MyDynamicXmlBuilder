@@ -2,47 +2,39 @@
 {
     using System;
     using System.IO;
+    using System.Xml;
     using System.Linq;
     using System.Text;
-    using System.Xml;
-    using System.Xml.Linq;
     using System.Dynamic;
-    using System.Threading;
+    using System.Xml.Linq;
 
     /// <summary>
     ///     Dynamic XML construction API for .NET
     /// </summary>
-    ///
+    /// 
     /// <copyright>
-    ///     (c) Ivan Ivanov, 2015 - 2017 - http://xml.csyntax.net
+    ///     (c) Ivan Ivanov, 2015 - 2018 - http://xml.csyntax.net
     /// </copyright>
     public class XmlBuilder : DynamicObject, IDisposable
     {
-        private XDocument parent;
+        private readonly XDocument parent;
         private XContainer children;
-        private bool disposed = false;
-
-        private readonly object synchRoot = new object();
-
-        private const int DisposedFlag = 1;
-
-        private int _isDisposed;
-
-        protected bool IsDisposed
-        {
-            get
-            {
-                Interlocked.MemoryBarrier();
-
-                return this._isDisposed == 1;
-            }
-        }
 
         public XmlBuilder()
 		{
             this.parent = new XDocument();
             this.children = parent;
 		}
+
+        public XmlBuilder(MemoryStream memoryStream, XmlWriter xmlWriter)
+        {
+            this.MemoryStream = memoryStream;
+            this.XmlWriter = xmlWriter;
+        }
+
+        private MemoryStream MemoryStream { get; set; }
+
+        private XmlWriter XmlWriter { get; set; }
 
         public static Action Section(Action fragmentBuilder)
 		{
@@ -177,14 +169,16 @@
 
         public string Build()
         {
-            Encoding encoding = new UTF8Encoding(false);
+            /*Encoding encoding = new UTF8Encoding(false);
 
             if (this.parent.Declaration != null && 
                 !string.IsNullOrEmpty(this.parent.Declaration.Encoding) &&
                 this.parent.Declaration.Encoding.ToLowerInvariant() == "utf-16")
             {
                 encoding = new UnicodeEncoding(false, false);
-            }
+            }*/
+
+            var encoding = new UnicodeEncoding();
 
             XmlWriterSettings writerSettings = new XmlWriterSettings
             {
@@ -193,61 +187,49 @@
                 CloseOutput = true,
                 OmitXmlDeclaration = false,
                 WriteEndDocumentOnClose = true,
-                Async = true,
+                Async = false,
                 CheckCharacters = true,
                 ConformanceLevel = ConformanceLevel.Document,
                 NamespaceHandling = NamespaceHandling.Default,
                 DoNotEscapeUriAttributes = false
             };
 
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (this.MemoryStream = new MemoryStream())
             {
-                using (XmlWriter xmlWriter = XmlWriter.Create(memoryStream, writerSettings))
+                using (this.XmlWriter = XmlWriter.Create(this.MemoryStream, writerSettings))
                 {
-                    this.parent.Save(xmlWriter);
+                    this.parent.Save(this.XmlWriter);
 
-                    xmlWriter.Flush();
-                    xmlWriter.Close();
+                    this.XmlWriter.Close();
                 }
 
-                if (encoding is UnicodeEncoding)
-                {
-                    return Encoding.Unicode.GetString(memoryStream.ToArray());
-                }
-                else
-                {
-                    return Encoding.UTF8.GetString(memoryStream.ToArray());
-                }
+                this.MemoryStream.Close();
             }
+
+            /*if (encoding is UnicodeEncoding)
+            {
+                return Encoding.Unicode.GetString(this.MemoryStream.ToArray());
+            }
+            else
+            {
+                return Encoding.UTF8.GetString(this.MemoryStream.ToArray());
+            }*/
+
+            return Encoding.Unicode.GetString(this.MemoryStream.ToArray());
         }
 		
-		public override string ToString() => this.Build();
+		//public override string ToString() => this.Build();
 
-        public static implicit operator string(XmlBuilder xml) => xml.ToString();
+        //public static implicit operator string(XmlBuilder xml) => xml.ToString();
 
         public static dynamic Create() => new XmlBuilder();
 
-        public virtual void Dispose()
+        public static dynamic Create(MemoryStream memoryStream, XmlWriter xmlWriter) => new XmlBuilder(memoryStream, xmlWriter);
+
+        public void Dispose()
         {
-            if (Interlocked.Exchange(ref this._isDisposed, 1) == 1)
-            {
-                return;
-            }
-
-            this.Dispose(true);
-
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                lock (synchRoot)
-                {
-                    this.disposed = true;
-                }
-            }
+            this.MemoryStream.Dispose();
+            this.XmlWriter.Dispose();
         }
     }
 }
