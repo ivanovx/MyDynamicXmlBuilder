@@ -13,10 +13,13 @@
     /// </summary>
     /// 
     /// <copyright>
-    ///     (c) Ivan Ivanov, 2015 - 2018 - http://xml.csyntax.net
+    ///     (c) Ivan Ivanov, 2015 - 2019 - http://xml.csyntax.net
     /// </copyright>
-    public class XmlBuilder : DynamicObject, IDisposable
+    public class XmlBuilder : DynamicObject, IXmlBuilder
     {
+        private readonly MemoryStream memoryStream;
+        private XmlWriter xmlWriter;
+
         private readonly XDocument parent;
         private XContainer children;
 
@@ -28,13 +31,9 @@
 
         public XmlBuilder(MemoryStream memoryStream, XmlWriter xmlWriter)
         {
-            this.MemoryStream = memoryStream;
-            this.XmlWriter = xmlWriter;
+            this.memoryStream = memoryStream;
+            this.xmlWriter = xmlWriter;
         }
-
-        private MemoryStream MemoryStream { get; set; }
-
-        private XmlWriter XmlWriter { get; set; }
 
         public static Action Section(Action fragmentBuilder)
 		{
@@ -162,10 +161,7 @@
 			this.children.Add(new XComment(comment));
 		}
 
-        public void Declaration()
-        {
-            this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
-        }
+        public void Declaration() => this.parent.Declaration = new XDeclaration("1.0", "utf-8", "yes");
 
         public string Build()
         {
@@ -194,16 +190,12 @@
                 DoNotEscapeUriAttributes = false
             };
 
-            using (this.MemoryStream = new MemoryStream())
+            using (this.memoryStream)
             {
-                using (this.XmlWriter = XmlWriter.Create(this.MemoryStream, writerSettings))
+                using (this.xmlWriter = XmlWriter.Create(this.memoryStream, writerSettings))
                 {
-                    this.parent.Save(this.XmlWriter);
-
-                    this.XmlWriter.Close();
+                    this.parent.Save(this.xmlWriter);
                 }
-
-                this.MemoryStream.Close();
             }
 
             /*if (encoding is UnicodeEncoding)
@@ -215,21 +207,23 @@
                 return Encoding.UTF8.GetString(this.MemoryStream.ToArray());
             }*/
 
-            return Encoding.Unicode.GetString(this.MemoryStream.ToArray());
+            return Encoding.Unicode.GetString(this.memoryStream.ToArray());
         }
 		
-		//public override string ToString() => this.Build();
+		public override string ToString() => this.Build();
 
-        //public static implicit operator string(XmlBuilder xml) => xml.ToString();
+        public static implicit operator string(XmlBuilder xml) => xml.Build();
 
-        public static dynamic Create() => new XmlBuilder();
+        public static dynamic Create()
+            => new XmlBuilder();
 
-        public static dynamic Create(MemoryStream memoryStream, XmlWriter xmlWriter) => new XmlBuilder(memoryStream, xmlWriter);
+        public static dynamic Create(MemoryStream memoryStream, XmlWriter xmlWriter) 
+            => new XmlBuilder(memoryStream, xmlWriter);
 
         public void Dispose()
         {
-            this.MemoryStream.Dispose();
-            this.XmlWriter.Dispose();
+            this.memoryStream.Dispose();
+            this.xmlWriter.Dispose();
         }
     }
 }
