@@ -1,4 +1,4 @@
-# [MyDynamicXmlBuilder](http://xml.csyntax.net)
+# [MyDynamicXmlBuilder](http://xml.csyntax.net) [deprecated]
 
 [![NuGet version](https://badge.fury.io/nu/MyDynamicXmlBuilder.svg)](https://badge.fury.io/nu/MyDynamicXmlBuilder)
 [![Build status](https://ci.appveyor.com/api/projects/status/ilklj1gfluf4l0dp?svg=true)](https://ci.appveyor.com/project/IvanIvanov/mydynamicxmlbuilder)
@@ -6,7 +6,7 @@
 > Dynamic XML construction API for .NET written on C#.
 
 ## Requirements
-* .NET Framework 4.5.2
+* .NET Stanndart 
 
 ## Installation
 - Install from Nuget `Install-Package MyDynamicXmlBuilder`
