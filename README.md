@@ -6,7 +6,7 @@
 > Dynamic XML construction API for .NET written on C#.
 
 ## Requirements
-* .NET Stanndart 
+* .NET Standard
 
 ## Installation
 - Install from Nuget `Install-Package MyDynamicXmlBuilder`
